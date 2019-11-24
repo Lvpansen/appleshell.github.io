@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 苹果壳
+title: appleshell
 subtitle: ''
 description: ''
 keywords:
@@ -96,5 +96,5 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:appleshell/appleshell.github.io.git
+  repo: https://github.com/appleshell/appleshell.github.io.git
   branch: master
