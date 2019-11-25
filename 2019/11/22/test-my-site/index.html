@@ -47,16 +47,19 @@
   };
 </script>
 
-  <meta name="description" content="Foo&amp;">
+  <meta name="description" content="markdown语法快速入门">
 <meta name="keywords" content="test">
 <meta property="og:type" content="article">
 <meta property="og:title" content="我的测试文章">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;22&#x2F;test-my-site&#x2F;index.html">
 <meta property="og:site_name" content="appleshell">
-<meta property="og:description" content="Foo&amp;">
+<meta property="og:description" content="markdown语法快速入门">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-11-24T07:40:08.216Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.52z.com&#x2F;upload&#x2F;news&#x2F;image&#x2F;20180621&#x2F;20180621055734_59936.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.52z.com&#x2F;upload&#x2F;news&#x2F;image&#x2F;20180621&#x2F;20180621055734_59936.jpg">
+<meta property="og:updated_time" content="2019-11-25T16:28:19.100Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;img.52z.com&#x2F;upload&#x2F;news&#x2F;image&#x2F;20180621&#x2F;20180621055734_59936.jpg">
 
 <link rel="canonical" href="http://yoursite.com/2019/11/22/test-my-site/">
 
@@ -201,7 +204,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-11-24 15:40:08" itemprop="dateModified" datetime="2019-11-24T15:40:08+08:00">2019-11-24</time>
+                <time title="Modified: 2019-11-26 00:28:19" itemprop="dateModified" datetime="2019-11-26T00:28:19+08:00">2019-11-26</time>
               </span>
 
           
@@ -215,80 +218,109 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <table>
-  <tr>
-    <td>Foo&</td>
-  </tr>
-</table>
+        <p>markdown语法快速入门</p>
 <a id="more"></a>
-&amp;
-
-<p>&lt;</p>
-<p>&copy;</p>
-<p>AT&amp;T</p>
-<h1 id="这是类Setext形式的最高阶标题"><a href="#这是类Setext形式的最高阶标题" class="headerlink" title="这是类Setext形式的最高阶标题"></a>这是类Setext形式的最高阶标题</h1><h2 id="这是类Setext形式的第二阶标题"><a href="#这是类Setext形式的第二阶标题" class="headerlink" title="这是类Setext形式的第二阶标题"></a>这是类Setext形式的第二阶标题</h2><h1 id="这是类Atx形式的标题"><a href="#这是类Atx形式的标题" class="headerlink" title="这是类Atx形式的标题"></a>这是类Atx形式的标题</h1><h2 id="这是类Atx形式的标题-1"><a href="#这是类Atx形式的标题-1" class="headerlink" title="这是类Atx形式的标题"></a>这是类Atx形式的标题</h2><p>类Atx形式中，行首的#字符数量决定标题的阶数</p>
-<blockquote>
-<p>this is a blockqutoe<br>this is a blockqutoe<br>this is a blockqutoe</p>
-<p>done sit ame nisl.</p>
-</blockquote>
-<blockquote>
-<p>this is a blockquote with two<br>conseedfjd<br>sfsdfkj.</p>
-</blockquote>
-<blockquote>
-<p>这是一个区块引用</p>
-<blockquote>
-<p>这是区块引用中的嵌套</p>
-</blockquote>
-</blockquote>
-<blockquote>
-<h2 id="这是一个标题"><a href="#这是一个标题" class="headerlink" title="这是一个标题"></a>这是一个标题</h2><ol>
-<li>这是第一行列表项</li>
-<li>这是第二行列表项</li>
+<h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><p>标题的语法有两种形式，Setext和Atx。</p>
+<ol>
+<li>Setext，用底线的形式，利用<code>=</code>（最高阶标题）和<code>-</code>（第二阶标题）：</li>
 </ol>
-</blockquote>
+<p>最高阶标题，渲染成HTML中的<code>h1</code>标签</p>
+<pre><code>最高阶标题
+=========</code></pre><p>第二阶标题，渲染成HTML中的<code>h2</code>标签</p>
+<pre><code>第二阶标题
+----------</code></pre><ol start="2">
+<li>Atx，用行首的#字符标识标题的阶数，1-6个#字符标识第1-第6阶标题</li>
+</ol>
+<p>第一阶，渲染成HTML中的<code>h1</code>标签</p>
+<pre><code># 第一阶</code></pre><p>第二阶，渲染成HTML中的<code>h2</code>标签</p>
+<pre><code>## 第二阶</code></pre><p>第三阶，渲染成HTML中的<code>h3</code>标签</p>
+<pre><code>### 第三阶</code></pre><p>第四到六阶依此类推</p>
+<h2 id="段落"><a href="#段落" class="headerlink" title="段落"></a>段落</h2><p>一个段落由一个以上的连接的行句组成，而一个以上的空行则会划分出不同的段落，一般的段落不需要用空白或者换行缩进。</p>
+<p>空行的定义时显示上看起来像是空行，就会被视为空行，例如一行只有空白或者tab，那这行就会被视为空行。</p>
+<p>段落并没有特殊的标记符号，需要注意的只有换行，是用一个以上的空白行来实现。</p>
+<h2 id="区块"><a href="#区块" class="headerlink" title="区块"></a>区块</h2><p>区块引用使用email形式的<code>&gt;</code>叫括号</p>
+<pre><code>&gt; 这是一个区块</code></pre><h2 id="修辞和强调"><a href="#修辞和强调" class="headerlink" title="修辞和强调"></a>修辞和强调</h2><p>使用<code>*</code>和<code>_</code>来标记需要强调的部分。</p>
+<p>这些文字中有两个被<em>修辞</em>了</p>
+<pre><code>这些文字中有两个被*修辞*了</code></pre><p>这行中的文字有几个被 <em>修辞</em> 了。</p>
+<pre><code>这行中的文字有几个被 _修辞_ 了。这里`_`符号前和后需要加空格才生效</code></pre><p>这些文字中有两个被<strong>强调</strong>了</p>
+<pre><code>这些文字中有两个被**强调**了</code></pre><p>这行中的文字有几个被<strong>强调</strong>了。</p>
+<pre><code>这行中的文字有几个被__强调__了。这里`__`符号前和后在vscode中需要加空格才生效</code></pre><h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><ol>
+<li>无序列表，使用<code>*</code>、<code>+</code>、<code>-</code>来标识</li>
+</ol>
 <blockquote>
-<p>给出一些例子代码：</p>
-<pre><code>return shell_exec(&quot;echo $input | $markdown_script&quot;)</code></pre></blockquote>
-<h3 id="这是无序列表，使用-号，-号，或者-号"><a href="#这是无序列表，使用-号，-号，或者-号" class="headerlink" title="这是无序列表，使用*号，+号，或者-号"></a>这是无序列表，使用*号，+号，或者-号</h3><ul>
-<li>Red</li>
-<li>Green</li>
-<li>Blue</li>
-</ul>
 <ul>
 <li>Red</li>
 <li>Green</li>
-<li>Blue</li>
 </ul>
+</blockquote>
+<pre><code>* Red
+* Green</code></pre><blockquote>
 <ul>
 <li>Red</li>
 <li>Green</li>
-<li>Blue</li>
 </ul>
-<h3 id="有序列表，使用数字接一个英文句点"><a href="#有序列表，使用数字接一个英文句点" class="headerlink" title="有序列表，使用数字接一个英文句点"></a>有序列表，使用数字接一个英文句点</h3><ol>
+</blockquote>
+<pre><code>+ Red
++ Green</code></pre><blockquote>
+<ul>
+<li>Red</li>
+<li>Green</li>
+</ul>
+</blockquote>
+<pre><code>- Red
+- Green</code></pre><p>列表之间可以插入段落</p>
+<ul>
+<li><p>这是第一行</p>
+<p>这是一个段落</p>
+<p>这是又一个段落</p>
+</li>
+<li><p>这是又一行</p>
+</li>
+</ul>
+<ol start="2">
+<li>有序列表，使用数字加英文句点标识</li>
+</ol>
+<blockquote>
+<ol>
 <li>Bird</li>
 <li>Mchale</li>
 <li>Parish</li>
 </ol>
+</blockquote>
+<h2 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h2><p>连接语法分为：<strong>行内</strong>和<strong>参考</strong>两种形式</p>
 <ol>
-<li>Bird</li>
-<li>McHale</li>
-<li>Parish</li>
+<li>行内</li>
 </ol>
+<p>这是一个连接去<a href="https://www.baidu.com" target="_blank" rel="noopener">百度</a></p>
+<pre><code>这是一个连接去[百度](https://www.baidu.com)</code></pre><p>这是一个连接去<a href="https://www.baidu.com" target="_blank" rel="noopener" title="百度">百度</a>，加上了title属性。</p>
+<pre><code>这是一个连接去[百度](https://www.baidu.com/ &quot;百度&quot;)，加上了title属性。</code></pre><ol start="2">
+<li>参考</li>
+</ol>
+<p>学习markdown，我参考了两篇文章：<a href="https://www.appinn.com/markdown/basic.html" target="_blank" rel="noopener">快速入门</a>和<a href="https://www.appinn.com/markdown/" target="_blank" rel="noopener" title="这里是链接的title属性">详细介绍</a></p>
+<pre><code>学习markdown，我参考了两篇文章：[快速入门][1]和[详细介绍][2]
 
-<ol>
-<li>bird</li>
-<li>Mchale</li>
-<li>Parish</li>
+[1]: https://www.appinn.com/markdown/basic.html
+[2]: https://www.appinn.com/markdown/ &quot;这里是链接的title属性&quot;</code></pre><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><ol>
+<li>在段落中插入代码段，使用”`”反引号来标识</li>
 </ol>
-<ul>
-<li><p>这是一个段落。<br>这还是那个。</p>
-</li>
-<li><p>这是又一个段落。<br>怎么样</p>
-</li>
-</ul>
-<p>这是一个普通段落：</p>
-<pre><code>这是一个代码区块</code></pre><p>这是代码区块：</p>
-<pre><code>console.log(&apos;hello word&apos;)</code></pre><h2 id="再来更新一行"><a href="#再来更新一行" class="headerlink" title="再来更新一行"></a>再来更新一行</h2>
+<p>在html中，我们用<code>&lt;h1&gt;&lt;/h1&gt;</code>标签来显示标题；在js中我们使用<code>console.log()</code>来打印日志。</p>
+<pre><code>在html中，我们用`&lt;h1&gt;&lt;/h1&gt;`标签来显示标题；在js中我们使用`console.log()`来打印日志。</code></pre><ol start="2">
+<li>建立一个格式化好的代码块，每行缩进4个空格或者一个tab:<blockquote>
+</blockquote>
+ function print() {<pre><code>console.log(&apos;hello, hexo&apos;)</code></pre> }</li>
+</ol>
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><p>图片的语法和链接很像, 也分为行内和参考两种形式</p>
+<ol>
+<li>行内</li>
+</ol>
+<p><img src="http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg" alt="天空" title="蓝天碧水"></p>
+<pre><code>![天空](http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg &quot;蓝天碧水&quot;)</code></pre><ol start="2">
+<li>参考</li>
+</ol>
+<p><img src="http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg" alt="天空" title="蓝天碧水"></p>
+<pre><code>![天空][id]
+
+[id]: http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg &quot;蓝天碧水&quot;</code></pre>
     </div>
 
     
@@ -347,7 +379,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#这是类Setext形式的最高阶标题"><span class="nav-number">1.</span> <span class="nav-text">这是类Setext形式的最高阶标题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#这是类Setext形式的第二阶标题"><span class="nav-number">1.1.</span> <span class="nav-text">这是类Setext形式的第二阶标题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#这是类Atx形式的标题"><span class="nav-number">2.</span> <span class="nav-text">这是类Atx形式的标题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#这是类Atx形式的标题-1"><span class="nav-number">2.1.</span> <span class="nav-text">这是类Atx形式的标题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#这是一个标题"><span class="nav-number">2.2.</span> <span class="nav-text">这是一个标题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#这是无序列表，使用-号，-号，或者-号"><span class="nav-number">2.2.1.</span> <span class="nav-text">这是无序列表，使用*号，+号，或者-号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有序列表，使用数字接一个英文句点"><span class="nav-number">2.2.2.</span> <span class="nav-text">有序列表，使用数字接一个英文句点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#再来更新一行"><span class="nav-number">2.3.</span> <span class="nav-text">再来更新一行</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#标题"><span class="nav-number">1.</span> <span class="nav-text">标题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#段落"><span class="nav-number">2.</span> <span class="nav-text">段落</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#区块"><span class="nav-number">3.</span> <span class="nav-text">区块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修辞和强调"><span class="nav-number">4.</span> <span class="nav-text">修辞和强调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列表"><span class="nav-number">5.</span> <span class="nav-text">列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连接"><span class="nav-number">6.</span> <span class="nav-text">连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">7.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片"><span class="nav-number">8.</span> <span class="nav-text">图片</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
