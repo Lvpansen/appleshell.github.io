@@ -54,3 +54,8 @@ git常用，但是有些命令记不住，用的时候就临时根据使用场�
     $ git reset --hard origin/master
 
     $ git pull
+
+> ### 删除远程分支
+
+    # 有必要可以
+    $ git push -d origin [remote_branch]
