@@ -247,6 +247,10 @@ _________
 
     [id]: http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg "蓝天碧水"
 
+![我放在阿里云上的图片][id1]
+
+[id1]: https://appleshell-images.oss-cn-shanghai.aliyuncs.com/images/IMG_20141217_142036.jpg
+
 ## 反斜杠转义
 markdown中有不少语法是使用一些符号来实现的，当我们需要显示这些符号本身时，就需要反斜杠来帮忙。
 
