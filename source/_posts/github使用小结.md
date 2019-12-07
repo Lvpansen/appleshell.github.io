@@ -13,7 +13,10 @@ categories: git & github
 
 [github action][4]
 
+[给开源仓库提PR][5]
+
 [1]: https://www.jianshu.com/p/6c366b53ea41
 [2]: https://developer.github.com/webhooks/
 [3]: https://blog.csdn.net/qq1332479771/article/details/56087333
 [4]: http://www.ruanyifeng.com/blog/2019/09/getting-started-with-github-actions.html
+[5]: https://juejin.im/post/5cefbf956fb9a07ed657b831
