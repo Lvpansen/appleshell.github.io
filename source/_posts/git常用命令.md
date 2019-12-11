@@ -108,8 +108,15 @@ git常用，但是有些命令记不住，用的时候就临时根据使用场�
     $ git push origin newName
 
 > ### 合并commit
+
+> ### 图形化显示git提交历史
+    
+    $ git log --graph --decorate --pretty=oneline
+
+更详细的查看[这里][4]
     
 
 [1]: http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html
 [2]: https://www.zhihu.com/question/38305012
 [3]: https://www.cnblogs.com/qianqiannian/p/6010219.html
+[4]: http://strivingboy.github.io/blog/2014/09/29/better-git-log/
