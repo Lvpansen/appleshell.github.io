@@ -2,6 +2,7 @@
 title: 初学mongoDB
 date: 2019-12-22 23:01:31
 tags: mongoDB
+categories: mongoDB
 ---
 
 记录初学mongoDB的一些知识点

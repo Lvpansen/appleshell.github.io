@@ -2,6 +2,7 @@
 title: mongoDB的安装
 date: 2019-12-22 16:40:08
 tags: mongoDB
+categories: mongoDB
 ---
 
 这篇文章主要介绍 win10 安装 mongoDB4.0 过程及安装过程中一些问题的解决方法。
@@ -41,7 +42,7 @@ mongoDB 的下载地址点击[这里][1]。我下载的是 msi 安装包。
 2. 输入命令：`mongod --dbpath D:\tool\MongoDB\data`，然后启动服务。后面的路径根据你自己的 mongoDB 安装路径进行修改。
 3. 如果不想在命令窗口打印日志，可先在 log 文件夹下新建名为`mongo.log`的文件，然后执行`mongod --dbpath D:\tool\MongoDB\data --logpath D:\tool\MongoDB\log\mongo.log`命令。
 
-    注：--dbpath 是指定数据库存放目录，要注意 dbpath 前有两个“-”。如果想换访问的端口号，可以在命令后加`--port 10086`，这样就切换到了 10086 端口。
+   注：--dbpath 是指定数据库存放目录，要注意 dbpath 前有两个“-”。如果想换访问的端口号，可以在命令后加`--port 10086`，这样就切换到了 10086 端口。
 
 4. 命令行最后打印出：`I NETWORK [threadl] waiting for connections on port 27017`，则表示启动成功。
 5. 在浏览器中输入`http://localhost:27017`,可以看到浏览器显示`It looks like you are trying to access MongoDB over HTTP on the native driver port.`
@@ -69,7 +70,7 @@ mongoDB 的下载地址点击[这里][1]。我下载的是 msi 安装包。
 
 ### 一些问题
 
-1. mongod命令默认启动的地址是localhost，也就是本地地址（也可以用127.0.0.1）链接。如果想要切换成本机IP，可以按照下面的方式:
+1. mongod 命令默认启动的地址是 localhost，也就是本地地址（也可以用 127.0.0.1）链接。如果想要切换成本机 IP，可以按照下面的方式:
 
         /* 启动服务，bind_ip参数跟的是要切换的IP */
         mongod --dbpath D:\tool\MongoDB\data --logpath D:\tool\MongoDB\log\mongo.log --bind_ip 10.0.1.109
