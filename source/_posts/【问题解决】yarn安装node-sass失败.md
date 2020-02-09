@@ -30,6 +30,24 @@ node-sass下载在国内受到限制，如果不能科学上网，一般通过�
 
 nvm的使用请参考[这篇文章][5]。
 
+配置npm源还有一种方式是使用nrm。安装nrm并设置淘宝源：
+
+    npm i -g nrm
+    nrm use taobao
+
+使用`npm ls`查看其他源的地址：
+
+    nrm ls
+
+      npm -------- https://registry.npmjs.org/
+      yarn ------- https://registry.yarnpkg.com/
+      cnpm ------- http://r.cnpmjs.org/
+    * taobao ----- https://registry.npm.taobao.org/
+      nj --------- https://registry.nodejitsu.com/
+      npmMirror -- https://skimdb.npmjs.com/registry/
+      edunpm ----- http://registry.enpmjs.org/
+
+
 [1]: https://github.com/sass/node-sass/tags
 [2]: https://github.com/coreybutler/nvm-windows/releases
 [3]: https://github.com/nvm-sh/nvm
