@@ -106,6 +106,32 @@ categories: Typescript
         let a:string = ee()  // OK
         let c:string = rr() // Error, Type 'void' is not assignable to type 'string'
 
+11. Object
+    object表示非基础类型，即不是number、string、boolean、bigint、symbol、null或者undefined之外的任何类型。
+
+        declare function create(o: object | null): void
+
+        create({ prop: 0 }) // OK
+        create(null) // OK
+
+        create(42) // Error
+        create(false) // Error
+
+12. Type assertions 类型断言
+    当你清楚的知道一个变量具有比它现有类型更确切的类型时，可以使用断言。Typescript假设你已经进行了必要的检查。
+    类型断言有两种方式：
+
+    尖括号语法
+
+        let someValue: any = 'this is a string'
+        let strLength = (<string>someValue).length
+
+    as语法
+
+        let someValue: any = 'this is a string'
+        let strLength = (someValue as string).length
+
+    两种语法基本等价。当在JSX中使用Typescript时，只能使用as语法。
 
 
 > ## 接口
