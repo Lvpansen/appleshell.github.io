@@ -164,8 +164,9 @@ categories: Typescript
 
     两种语法基本等价。当在JSX中使用Typescript时，只能使用as语法。
 
-
 > ## 接口
+
+
 
 > ## 函数
 
