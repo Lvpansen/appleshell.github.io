@@ -166,6 +166,120 @@ categories: Typescript
 
 > ## 接口
 
+TypeScript的核心原则之一就是对值所具备的结构（shape）进行类型检查。
+
+接口命名这些类型，同时为自己的代码或者第三方的代码定义规范。
+
+1. 定义一个接口
+
+    ```js
+    interface LabelValue {
+        label: string
+    }
+
+    function printLabel(labelObj: LabelValue):void {
+        console.log(lableObj.label)
+    }
+
+    printLabel({ label: 'hello' }) // Ok
+    printLabel({ label: 'hello', size: 10}) // Error
+
+    let myObj = { label: 'hello', size: 10}
+    printLabel(myObj) // OK
+    ```
+
+2. 可选属性
+
+
+    ```js
+    interface Config{
+        color?: string
+        width?: number
+    }
+    
+    ```
+
+3. 只读属性
+
+    ```js
+    interface Config{
+        readonly x: number
+        readonly y: number
+    }
+    
+    ```
+
+4. 额外的属性检查
+
+    ```js
+    interface Config{
+        color?: string
+        width?: number
+    }
+
+    function createValue(config:Config) {
+        console.log(config.color + config.width)
+    }
+
+    createValue({ width: 12, name: 'jack'}) // Error
+    
+    ```
+
+javascript中这段代码没问题，但TypeScript会认为这段代码有bug。
+
+对象字面量赋值给变量或者作为参数传递的时候，会被特殊对待，而且会经过**额外属性校验**。如果对象字面量存在任何‘目标类型’不包含的属性时，就会报错。
+
+    ```js
+    // error: 'name' not expected in type 'Config'
+    createValue({ width: 12, name: 'jack'})
+    
+    ```
+
+绕开这些检查有几种方式：
+
+最简便的是类型断言
+
+    ```js
+    createValue({ width: 12, name: 'jack'} as Config)
+    ```
+
+最好的方式是添加一个字符串索引签名，前提是这个对象可能有其他的额外属性。
+
+    ```js
+    interface Config{
+        color?: string
+        width?: number
+        [propName: string]: any
+    }
+    ```
+
+最后一种方式是将这个对象赋给一个变量，因为这个变量不会经过额外属性检查
+
+    ```js
+    let myObj = { width: 12, name: 'jack'}
+    createValue(myObj) // OK
+    ```
+
+5. 函数类型
+
+用接口表示函数类型，我们给接口定义一个调用签名（call signature）
+
+    ```js
+    interface SearchFn {
+        (source: string, subString: string): boolean
+    }
+
+    let mySearch: SearchFn
+    mySearch = function(source: string, subString: string) {
+        let result = source.search(subString);
+        return result > -1;
+    }
+    ```
+
+函数的参数会逐个进行检查，要求对应位置上的参数类型是兼容的。
+
+6. 可索引类型
+
 
 
 > ## 函数
