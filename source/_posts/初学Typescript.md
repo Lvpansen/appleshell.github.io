@@ -166,7 +166,7 @@ categories: Typescript
 
 > ## 接口
 
-TypeScript的核心原则之一就是对值所具备的结构（shape）进行类型检查。
+TypeScript的核心原则之一就是对值所具备的形状（shape）进行类型检查。
 
 接口命名这些类型，同时为自己的代码或者第三方的代码定义规范。
 
@@ -312,8 +312,85 @@ TypeScript的核心原则之一就是对值所具备的结构（shape）进行�
     }
     ```
 
+    字符串类型的索引签名能够很好的描述dictionary模式，而且它会强制所有属性的类型与其返回值的类型匹配。
+
+    ```js
+    interface NumberDictionary {
+        [index: string]: number
+        length: number  // Ok
+        name: string  // Error
+    }
+
+    // 索引签名是个联合类型时，其他属性的类型可以不同
+    interface NumberDictionary {
+        [index: string]: number | string
+        length: number  // Ok
+        name: string  // OK
+    }
+    ```
+    可以给索引签名设置`readonly`，防止属性被赋值
+
+    ```js
+    interface ReadonlyStringArray {
+        readonly [index: number]: string
+    }
+    let myArray: ReadonlyStringArray = ["Alice", "Bob"]
+    myArray[2] = "Mallory"; // Error
+    ```
+
+7. 类类型
+    
+    类实现接口使用的关键字是`implements`。接口描述了类的公共部分，它不会检查类是否具有某些私有成员。
+
+8. 接口继承
+
+    像类一样，接口也可以继承，这样就可以提取可重用的接口模块。
+
+    ```js
+    interface Shape {
+        color: string
+    }
+
+    interface Square extends Shape {
+        length: number
+    }
+
+    let s: Square = { color: 'red', length: 12}
+    ```
+
+    还可以继承多个接口
+
+    ```js
+    interface Shape {
+        color: string
+    }
+
+    interface Stroke {
+        width: number
+    }
+
+    interface Square extends Shape, Stroke {
+        length: number
+    }
+
+    let s: Square = { color: 'red', width: 34, length: 12}
+    ```
+9. 混合类型
+
+10. 接口继承类
 
 > ## 函数
+
+1. 函数类型
+
+2. 可选参数和默认参数
+
+3. 剩余参数（rest）
+
+4. this
+
+5. 函数重载（overload）
+
 > ## 类
 > ## 泛型
 > ## 模块
