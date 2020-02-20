@@ -383,7 +383,63 @@ TypeScript的核心原则之一就是对值所具备的形状（shape）进行�
 
 1. 函数类型
 
+    函数类型包括两部分：参数类型和返回值类型。
+    
+    ```js
+    // 命名函数
+    function add(x: number, y: number): number {
+        return x + y
+    }
+
+    // 匿名函数
+    let myAdd = function(x: number, y: number): number {
+        return x + y
+    }
+    ```
+    TypeScript能够根据返回语句推断出返回值类型，因此返回值类型通常可以省略。
+
+    函数的完整类型
+
+    ```js
+    let myAdd: (x: number, y: number) => number = function(x: number, y: number): number { return x + y }
+    ```
+    这种形式是匿名函数的方式，`=>`在这里不是指箭头函数，它的左侧是参数类型，右侧是返回值类型。
+
+    函数没有返回值，其返回值类型是`void`
+
+
 2. 可选参数和默认参数
+
+    JavaScript中定义了函数，调用时其参数都是可选的，可传可不传，不传参时，其值就是undefined。
+
+    在Typescript中，函数定义了参数，调用时就必须传。
+
+    ```js
+    function getName(firstName: string, lastName: string) {
+        return firstName + ' ' + lastName
+    }
+
+    getName('Jim') // Error
+    getName('Jim', 'Jackson', 'Sr.') // Error
+    getName('Jim', 'Jackson') // OK
+    ```
+
+    在TypeScript中在参数名后加`?`来实现可选参数。可选参数必须写在必传参数之后。
+
+    ```js
+    function getName(firstName: string, lastName?: string) {
+        if (lastName) {
+            return firstName + ' ' + lastName
+        } else {
+            return lastName
+        }
+    }
+
+    getName('Jim') // OK
+    getName('Jim', 'Jackson', 'Sr.') // Error
+    getName('Jim', 'Jackson') // OK
+    ```
+
 
 3. 剩余参数（rest）
 
