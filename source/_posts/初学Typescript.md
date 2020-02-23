@@ -8,10 +8,16 @@ categories: Typescript
 记录学习Typescript的思路大纲和要点。
 
 <!-- more -->
-[Typescritp中文手册][1]
-
 [Typescritp官方网站][2]
 
+[Typescritp中文手册][1]
+
+[另一个中文手册][3]
+
+
+下面是一些关于TypeScript的学习文章
+
+[TypeScript 安利指南][4]
 > ## 基础类型和枚举
 
 1. 布尔值
@@ -77,7 +83,8 @@ categories: Typescript
         ```
 
     当然，也可以给每个元素全部按照需要全部赋值。
-    通过枚举类型的数值可以获取对应的描述名字
+
+    相比对象的key-value, 只能通过key去访问value，不能通过value访问key。在枚举中，正反都可以当作key来使用。
 
         ```js
         enum StatusCode {success = 1, warning = 3, error = 5}
@@ -440,14 +447,187 @@ TypeScript的核心原则之一就是对值所具备的形状（shape）进行�
     getName('Jim', 'Jackson') // OK
     ```
 
+    在必选参数后面的有默认值的参数，与可选参数一样，调用时可以省略传值。
+
+    但是如果默认参数放在必选参数前面，如果不想传值，则必须明确传入`undefined`来获取默认值。
+
+    可选参数与末尾的默认参数共享参数类型：
+
+    ```js
+    function buildName(firstName: string, lastName?: string) {
+        // ...
+    }
+    ```
+    和
+    ```js
+    function buildName(firstName: string, lastName = "Smith") {
+        // ...
+    }
+    ```
+    这两个函数共享同样的类型`(firstName: string, lastName?: string) => string`
+
 
 3. 剩余参数（rest）
 
+    在Javascript中，当你不知道函数会有多少参数传进来的时候，我们用`arguments`来访问所有传入的参数。
+
+    TypeScript中，我们可以用`...`符号来获取剩余参数
+
+    ```js
+    function buildName(firstName: string, ...restOfName: strin[]) {
+        return `${firstName} ${restOfName.join(" ")}`
+    }
+
+    let myName = buildName('Joseph', 'Samuel', 'Lucas', 'MacKinzie')
+
+    // 定义函数类型时也可以用到剩余参数
+    let buildNameFn: (fname: string, ...rest: string[]) => string = buildName
+    ```
+
 4. this
 
-5. 函数重载（overload）
+    重点理解JavaScript中的this知识。
 
-> ## 类
+5. 函数重载（overload）
+    JavaScript中经常会碰到根据参数的类型返回不同类型的值，在TypeScript中通过为同一个函数定义多个函数类型来进行函数重载
+
+    ```js
+    function getValue(x: string) : string
+
+    function getValue(x: number): number
+
+    function getValue(x): any {
+        if(typeof x === 'string') {
+            return '返回字符串'
+        } else if(typeof x === 'number') {
+            return x**2
+        }
+    }
+    ```
+    用JavaScript和Typescript实现这个函数的逻辑是相同的，只是在TypeScript中要定义多个类型，清晰展示传入值类型和返回值类型之间的关系。
+    注意：`function getValue(x): any`并不是重载列表的一部分，这里只有两个重载。
+
+> ## 类(Classes)
+1. 类的定义
+
+    关于类的详细知识，请查看阮一峰老师ES6教程中的讲解，很详细。TypeScript中类的使用是一样的，只是要在定义属性和方法时要注意类型的定义。
+
+2. public、private、pretected修饰符
+
+    这三种修饰符的作用是用来说明类中的属性和方法的使用范围：
+
+    ```js
+    class Test {
+        constructor() {}
+        // 公有实例属性
+        name = 'Jack';
+        // 公有方法
+        say() {
+            console.log(this.name)
+        }
+        public hello () {
+            this.say()
+            this.proFn()
+        }
+        // 私有属性
+        private hide() {}
+        // 受保护属性
+        protected proFn() {}
+        // 静态属性
+        static fn() {}
+    }
+
+    class subTest extends Test {
+        subFn() {
+            console.log(this.name) // OK
+            this.proFn() // OK
+        }
+    }
+    ```
+    
+    public：表示这个属性或者方法在类，子类（派生类），类的外部都可访问到；
+
+    以`name`属性为例，在`Test`类中可以访问，在派生类`subTest`中也可以访问。在类外部也可以访问，如下：
+
+    ```js
+    const test = new Test()
+    consle.log(test.name)  // OK
+    ```
+
+    private: 表示这个属性或者方法只能在类内部可以访问。
+
+    `hide`方法只能在`Test`类中访问，在`subTest`类中不能访问，通过`test`实例也不能访问。
+
+    protected：表示这个属性或者方法可以在类和子类中访问。
+
+    `proFn`方法可以在`Test`类和`subTest`访问。
+
+    注意：当省略修饰符的时候，默认表示的是public。
+
+3. readonly修饰符
+
+    顾名思义，`readonly`修饰符修饰的属性是只读的，不能被修改。只读属性必须在声明或者构造函数里初始化。
+
+
+4. 静态属性
+
+    public、private、protected和readonly修饰符针对的都是实例属性和方法。
+
+    类中定义静态属性和静态方法，只能通过类本身获取或者调用，不能通过实例化后的对象使用。其中要注意，静态方法中不能获取类中非静态的属性。
+
+    ```js
+    class Person1 {
+        static name1:string = 'ff'
+        static sayHello():void {
+            console.log(this.name1 + 'hello')
+        }
+    }
+
+    Person1.sayHello()
+    ```
+
+5. 存取器
+
+    类似于Object.defineProperty方法
+
+    ```js
+    class Name {
+        private _name: string
+
+        get myname() {
+            return this._name
+        }
+        set myname(value:string) {
+            this._name = value
+        }
+    }
+
+    let nameInfo = new Name()
+
+    nameInfo.myname
+    nameInfo.myname = 'gfg'
+    ```
+
+6. 抽象类（Abstract Classes）
+
+    抽象类，定义一个标准，是其他类继承的基类，抽象类中定义的抽象方法，子类必须实现。
+
+    不能直接被实例化, 不能new Animal1()
+    抽象方法只能定义在抽象类中，抽象方法不包含具体实现。
+
+    ```js
+    abstract class Aniaml1 {
+        public name:string
+        constructor(name:string){
+            this.name = name
+        }
+        abstract eat():void // 这个方法必须在子类中实现
+        run():void{ // 这个不是抽象方法，所以子类中可以不实现。
+
+        }
+    }
+    ```
+
 > ## 泛型
 > ## 模块
 > ## 命名空间
@@ -455,3 +635,5 @@ TypeScript的核心原则之一就是对值所具备的形状（shape）进行�
 
 [1]: https://typescript.bootcss.com/
 [2]: https://www.typescriptlang.org/docs/home.html
+[3]: https://zhongsp.gitbooks.io/typescript-handbook/content/doc/handbook/Basic%20Types.html
+[4]: https://mp.weixin.qq.com/s/oaGWXcEYAw8ovfcY4nr5dQ
