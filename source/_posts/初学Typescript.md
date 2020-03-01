@@ -629,11 +629,159 @@ TypeScript的核心原则之一就是对值所具备的形状（shape）进行�
     ```
 
 > ## 泛型
+
+1. 通俗来讲，泛型解决的是类、接口、方法的复用性问题，以及对不特定数据类型的支持。在C语言和Java中，使用泛型创建可支持多种类型的组件，这样就允许用户根据自己的类型来使用组件。
+
+2. 泛型函数
+
+    ```js
+    // 定义普通函数，指定了类型，所以没办法复用
+    function getData(value: string):string {
+        return value
+    }
+
+    // 给函数参数和返回值指定泛型，就可以不受类型限制而可以复用
+    function getData<T>(value: T): T {
+        return value
+    }
+
+    getData<number>(12)
+    getData<string>('acb')
+
+    // 下面这个泛型函数接收类型参数T，参数arg，是个元素类型为T的数组，返回元素类型为T的数组。
+    function getArray<T>(arg: T[]): T[] {
+        console.log(arg.length)
+        return arg
+    }
+
+    ```
+
+3. 泛型类型
+
+    ```js
+    function getInfo<T>(arg: T): T {
+        return arg
+    }
+
+    let myInfo: <T>(arg: T) => T = getInfo
+    ```
+    这里，变量myInfo的类型就是个泛型类型，函数getInfo正好能匹配上这个泛型类型。也可以这样写：
+
+    ```js
+    let myInfo: {<T>(arg: T): T} = getInfo
+    ```
+4. 泛型接口
+
+    上面的最后一个写法就可以用泛型接口实现
+
+    ```js
+    interface MyInfoFn {
+        <T>(arg: T): T
+    }
+
+    function getInfo<T>(arg: T): T {
+        return arg
+    }
+
+    let myInfo: MyInfoFn = getInfo
+
+    myInfo<number>(234)
+    ```
+    泛型接口也可以这样写：
+
+    ```js
+    interface MyInfoFn<T> {
+        (arg: T): T
+    }
+
+    function getInfo<T>(arg: T): T {
+        return arg
+    }
+
+    let myInfo: MyInfoFn<string> = getInfo
+
+    myInfo('sdf')
+    ```
+    注意两种写法的不同。
+
+5. 泛型类
+
+    泛型类和泛型接口写法差不多，
+
+    ```js
+    class Info<T> {
+        public value: T;
+        constructor(value: T) {
+            this.value = value
+        }
+
+        showInfo(x: T):T {
+            return x
+        }
+    }
+
+    let info = new Info<string>('sdf')
+    ```
+> ## 类型兼容性
+
+类型兼容性是基于结构类型的，结构类型只使用其成员来描述类型。
+
+结构化类型系统的基本规则是：如果X要兼容y，那么y至少具有与x相同的属性（y要包含x的所有属性）。
+
+    ```js
+    interface Person {
+        name: string
+    }
+
+    let x: Person
+    let y = { name：'Jack', age: 20}
+    x = y
+    ```
+       
+由于y有一个成员`name: string`匹配Person接口规定的属性，这就意味着x是y的子类型。因此这个复制是合法的。
+
 > ## 模块
+
+TypeScript与ES6一样，任何包含export和import的文件都被当作一个模块。任何声明（比如变量、函数、类、类型别名、接口）都可以通过export导出。
+
 > ## 命名空间
+
+在代码量较大的情况下，为了避免命名冲突，可将相似功能的函数、类、接口等放置到命名空间内。
+
+TypeScript中的命名空间将代码包裹起来，通过export对外暴露需要在外部访问的成员。
+
+    ```js
+    namespace Animal {
+        let dog:string
+
+        export interface AnimalInfo {
+            getInfo(name: string): string
+        }
+
+        export class Dog implements AnimalInfo {
+            getInfo(name:string) {
+                return '名字：' + name
+            }
+        }
+    }
+    ```
+
+命名空间和模块的区别：
+
+    命名空间：内部模块，主要用于组织代码，避免命名冲突；
+
+    模块：外部模块的简称，侧重抽取公共代码，实现重用。一个模块中可能会有多个命名空间。
+
 > ## 装饰器
+
+装饰器相关的知识直接学习阮一峰老师的ES6教程中的装饰器知识。
+
+> ## 编写声明文件
+
+[声明文件][5]
 
 [1]: https://typescript.bootcss.com/
 [2]: https://www.typescriptlang.org/docs/home.html
 [3]: https://zhongsp.gitbooks.io/typescript-handbook/content/doc/handbook/Basic%20Types.html
 [4]: https://mp.weixin.qq.com/s/oaGWXcEYAw8ovfcY4nr5dQ
+[5]: https://www.cnblogs.com/jiasm/p/9789962.html
