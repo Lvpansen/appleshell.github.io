@@ -14,10 +14,14 @@ categories: Typescript
 
 [另一个中文手册][3]
 
+[深入理解 TypeScript][7]
+
 
 下面是一些关于TypeScript的学习文章
 
 [TypeScript 安利指南][4]
+
+[TS常见问题整理][5]，包含一些TS本身的问题，项目中tsconfig.json配置问题，ts+react使用中的一些问题。
 > ## 基础类型和枚举
 
 1. 布尔值
@@ -778,10 +782,12 @@ TypeScript中的命名空间将代码包裹起来，通过export对外暴露需�
 
 > ## 编写声明文件
 
-[声明文件][5]
+[声明文件][6]
 
 [1]: https://typescript.bootcss.com/
 [2]: https://www.typescriptlang.org/docs/home.html
 [3]: https://zhongsp.gitbooks.io/typescript-handbook/content/doc/handbook/Basic%20Types.html
 [4]: https://mp.weixin.qq.com/s/oaGWXcEYAw8ovfcY4nr5dQ
-[5]: https://www.cnblogs.com/jiasm/p/9789962.html
+[5]: https://mp.weixin.qq.com/s/KmDLcJ0jhB667ZouDB8tyg
+[6]: https://www.cnblogs.com/jiasm/p/9789962.html
+[7]: https://jkchao.github.io/typescript-book-chinese/typings/lib.html#%E4%BD%BF%E7%94%A8%E4%BE%8B%E5%AD%90
