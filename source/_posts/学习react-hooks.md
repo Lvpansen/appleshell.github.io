@@ -106,7 +106,7 @@ React的函数组件，在早期必须是纯函数，不能包含状态，也不
 
 ## useContext()
 
-需要先熟悉[context API][3]，才能更好理解`useContext（）`
+需要先熟悉[context API][3]，才能更好理解`useContext()`
 
 ## useReducer
 
