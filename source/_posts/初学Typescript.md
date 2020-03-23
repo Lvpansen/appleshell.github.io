@@ -22,6 +22,8 @@ categories: Typescript
 [TypeScript 安利指南][4]
 
 [TS常见问题整理][5]，包含一些TS本身的问题，项目中tsconfig.json配置问题，ts+react使用中的一些问题。
+
+[TypeScript进阶 之 重难点梳理][8]
 > ## 基础类型和枚举
 
 1. 布尔值
@@ -791,3 +793,4 @@ TypeScript中的命名空间将代码包裹起来，通过export对外暴露需�
 [5]: https://mp.weixin.qq.com/s/KmDLcJ0jhB667ZouDB8tyg
 [6]: https://www.cnblogs.com/jiasm/p/9789962.html
 [7]: https://jkchao.github.io/typescript-book-chinese/typings/lib.html#%E4%BD%BF%E7%94%A8%E4%BE%8B%E5%AD%90
+[8]: https://mp.weixin.qq.com/s/_lO3cd0FcF0Dg3TRnHPdwg

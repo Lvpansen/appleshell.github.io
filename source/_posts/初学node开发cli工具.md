@@ -15,5 +15,8 @@ categories: Node
 
 [文章2][2]
 
+[使用Yeoman开发自己的脚手架][3]
+
 [1]: https://juejin.im/post/5b1f6d70e51d4506a74d4aba
 [2]: https://juejin.im/post/5bc496196fb9a05d0f170694
+[3]: https://mp.weixin.qq.com/s/ZKhzPojvatiSUPdDdy03FA
