@@ -20,5 +20,6 @@ tags: ant-design react
       flex布局的属性分为容器属性和成员属性，需要分别记忆。
       
       自己模糊的点是成员属性中的简写属性flex：其是flex-grow、flex-shrink、flex-basis三个属性的简写。可通过菜鸟教程学习这三个属性的表现。
+      [三个属性学习文章](https://blog.csdn.net/m0_37058714/article/details/80765562)
 
   4. ant-desing是通过less的函数来计算col成员的flex-basis属性值，采用百分比。
