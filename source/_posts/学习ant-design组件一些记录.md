@@ -13,6 +13,13 @@ tags: ant-design react
   1. gutter属性是通过context传递给Col组件的。
   2. 在设置gutter属性大于0时，row组件通过设置`margin-left`、`margin-right`，`margin-top`为负值，使得其子组件从视觉上，在左侧，上侧，右侧是与Row组件变源是重合的。
 
-  在实际工作中，如果遇到需要上下左右平均分布，而且边缘和父容器重合的布局时，可以用这种方式事项。
+      在实际工作中，如果遇到需要上下左右平均分布，而且边缘和父容器重合的布局时，可以用这种方式事项。
   
   3. 采用的实际是flex布局。
+
+      flex布局的属性分为容器属性和成员属性，需要分别记忆。
+      
+      自己模糊的点是成员属性中的简写属性flex：其是flex-grow、flex-shrink、flex-basis三个属性的简写。可通过菜鸟教程学习这三个属性的表现。
+      [三个属性学习文章](https://blog.csdn.net/m0_37058714/article/details/80765562)
+
+  4. ant-desing是通过less的函数来计算col成员的flex-basis属性值，采用百分比。
