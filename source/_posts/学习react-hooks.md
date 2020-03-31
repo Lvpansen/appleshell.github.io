@@ -103,6 +103,7 @@ React的函数组件，在早期必须是纯函数，不能包含状态，也不
     )
   }
   ```
+  仔细学习[这篇文章](https://overreacted.io/a-complete-guide-to-useeffect/)，才是学习`useEffect`的最好途径，以上的总结只是一些tricks，而且还不完全对。
 
 ## useContext()
 

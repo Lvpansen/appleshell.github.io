@@ -177,6 +177,25 @@ categories: Typescript
 
     两种语法基本等价。当在JSX中使用Typescript时，只能使用as语法。
 
+    Definite Assignment Assertions -- 显示赋值断言，在class中声明了属性但没有赋值会报错，显示赋值断言就是告诉类型检查保证这个属性在使用前会初始化，不用检查这个属性的类型。[参考这里](https://blog.csdn.net/madlaxnoir/article/details/102969717)
+    ```js
+    class C {
+        foo!: number;
+        // ^
+        // Notice this '!' modifier.
+        // This is the "definite assignment assertion"
+
+        constructor() {
+            this.initialize();
+        }
+
+        initialize() {
+            this.foo = 0;
+        }
+    }
+    ```
+    安全导航操作符(?.)和非空断言操作符(!.)。[参考文章](https://www.jianshu.com/p/c22e6ee446b1)
+
 > ## 接口
 
 TypeScript的核心原则之一就是对值所具备的形状（shape）进行类型检查。
