@@ -23,3 +23,7 @@ tags: ant-design react
       [三个属性学习文章](https://blog.csdn.net/m0_37058714/article/details/80765562)
 
   4. ant-desing是通过less的函数来计算col成员的flex-basis属性值，采用百分比。
+
+## Avatar 头像
+
+  1. 头像组件中但设置内容为string时，如果字符长度超过了头像容器宽度，设置文本不换行，超出隐藏，然后使用`transform: scale()`样式，缩小内容。缩小的比例是：容器宽度-8 / 字符的宽度。
