@@ -126,6 +126,12 @@ React的函数组件，在早期必须是纯函数，不能包含状态，也不
 ## 自定义hooks
 
 
+-----------------------------------分割线-----------------------------
+
+[react作者介绍Hooks](https://dev.to/dan_abramov/making-sense-of-react-hooks-2eib)
+
+Why Hooks
+
 
 
 
