@@ -110,6 +110,9 @@ React的函数组件，在早期必须是纯函数，不能包含状态，也不
 需要先熟悉[context API][3]，才能更好理解`useContext()`
 
 ## useReducer
+当函数组件中有多个状态（基于相同的逻辑）时，可以用useReducer进行state的管理。
+
+[参考文章](https://medium.com/trabe/react-usereducer-hook-2b1331bb768)
 
 ## useCallback
 
