@@ -133,7 +133,7 @@ React的函数组件，在早期必须是纯函数，不能包含状态，也不
 
 [react作者介绍Hooks](https://dev.to/dan_abramov/making-sense-of-react-hooks-2eib)
 
-Why Hooks
+[比较详细的的介绍了Hooks的诞生背景](https://www.robinwieruch.de/react-hooks)，介绍了Hooks带来的变化。
 
 
 
