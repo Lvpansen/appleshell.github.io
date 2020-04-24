@@ -27,3 +27,7 @@ tags: ant-design react
 ## Avatar 头像
 
   1. 头像组件中但设置内容为string时，如果字符长度超过了头像容器宽度，设置文本不换行，超出隐藏，然后使用`transform: scale()`样式，缩小内容。缩小的比例是：容器宽度-8 / 字符的宽度。
+
+## Comment 评论
+
+  1. comment组件代码中对UI布局的划分符合官网文档中[React哲学](https://react.docschina.org/docs/thinking-in-react.html)这一章节中对UI划分的描述。虽然布局很简单，但也是一层一层划分，左侧头像和右侧content为一层；content中分为author层，内容层，action层；author层又分为name和time两层。布局的划分决定了组件封装策略和组件拼接方式。
