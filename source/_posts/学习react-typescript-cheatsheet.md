@@ -10,6 +10,8 @@ categories: typescript & react
 <!-- more -->
 [React中使用Typescript官方文档](https://reactjs.org/docs/static-type-checking.html#typescript)
 
+[react typescript实践](https://blog.bitsrc.io/react-typescript-cheetsheet-2b6fa2cecfe2)
+
 
 ## 函数组件（Function Components）
 
