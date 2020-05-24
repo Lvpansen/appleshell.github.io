@@ -45,3 +45,49 @@ tags: Javascript
   2. 对象的遍历，上述实现中使用了`Object.keys()`，再通过`forEach`方式实现遍历。另一种遍历对象的方式是`for...in`循环。两者的区别：`Object.keys()`可以获取对象自身的所有可枚举属性，不会遍历对象的原型；而`for...in`循环可以遍历对象自身以及原型上的所有可枚举属性。
   3. `str.replace`方法的第二个参数可以是函数，其返回值用于替换第一个参数匹配到的结果。
   4. 正则的非贪婪匹配模式
+
+> ### 将数组扁平化并去除重复数据，最终得到一个升序且不重复的数组
+
+示例：
+
+  ```js
+  var arr = [[2,3,5,3,[78,4,2,10]],[5,7,[23,15,6,[5,3,6,20]]],[3,4,6,7,[23,54,6,7]],[2,4,5,6,[13,6,7,8]],3]
+
+  function getResult(arr) {
+    // ...
+  }
+
+  getResult(arr) // 输出扁平、去重、升序的数组
+  ```
+思路：由题目可知，我们需要通过数组的扁平化、去重、排序三个步骤来实现。然后就是分别找出三个步骤的实现方法。扁平化：递归、flat、字符化后再转为数组...；去重：Set、循环比较...；排序：sort。
+
+  ```js
+  // 扁平化：
+  var res = arr.toString().split(',').map(Number);
+
+  var res = arr.flat(Infinity)
+
+  var res = []
+  function flatArr(arr) {
+      arr.forEach(item => {
+          if(Array.isArray(item)) {
+              return flatArr(item)
+          }
+          resa.push(item)
+      })
+      return res
+  }
+  // 去重
+  Array.from(new Set(res))
+
+  var res1 = []
+  res.forEach(item => {
+      if(res1.includes(item)){
+          return
+      }
+      res1.push(item)
+  })
+  // 排序
+  res1.sort((a, b) => a - b)
+  ```
+知识点：数组的扁平化、去重、排序实现方法，有些版本可能会使用数组的合并方法。
