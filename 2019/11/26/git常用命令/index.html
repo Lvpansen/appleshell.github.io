@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="appleshell" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="git常用，但是有些命令记不住，用的时候就临时根据使用场景google，然后就又忘了。现在总结一波，方便以后查阅。">
+<meta name="keywords" content="git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git常用命令">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;26&#x2F;git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4&#x2F;index.html">
+<meta property="og:site_name" content="appleshell">
+<meta property="og:description" content="git常用，但是有些命令记不住，用的时候就临时根据使用场景google，然后就又忘了。现在总结一波，方便以后查阅。">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.ruanyifeng.com&#x2F;blogimg&#x2F;asset&#x2F;2015&#x2F;bg2015120901.png">
+<meta property="og:updated_time" content="2019-12-11T17:36:30.114Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;www.ruanyifeng.com&#x2F;blogimg&#x2F;asset&#x2F;2015&#x2F;bg2015120901.png">
+
+<link rel="canonical" href="http://yoursite.com/2019/11/26/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>git常用命令 | appleshell</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">appleshell</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/26/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="appshell">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="appleshell">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          git常用命令
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-26 20:13:15" itemprop="dateCreated datePublished" datetime="2019-11-26T20:13:15+08:00">2019-11-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-12-12 01:36:30" itemprop="dateModified" datetime="2019-12-12T01:36:30+08:00">2019-12-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git-github/" itemprop="url" rel="index">
+                    <span itemprop="name">git & github</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>git常用，但是有些命令记不住，用的时候就临时根据使用场景google，然后就又忘了。现在总结一波，方便以后查阅。</p>
+<a id="more"></a>
+
+<p>使用git命令之前，一定要掌握git中几个工作区的概念：</p>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015120901.png" alt="git"></p>
+<blockquote>
+<ul>
+<li>Workspace：工作区</li>
+<li>Index / Stage：暂存区</li>
+<li>Repository：仓库区（或本地仓库）</li>
+<li>Remote：远程仓库</li>
+</ul>
+</blockquote>
+<p>详细的常用命令请查看<a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html" target="_blank" rel="noopener">阮一峰老师的文章</a>，有时间多看看，对于学习git很有帮助 。下面的内容是自己工作中遇到的一些场景，总结一下。</p>
+<blockquote>
+<h3 id="先建好了本地项目，之后需要推到远程仓库"><a href="#先建好了本地项目，之后需要推到远程仓库" class="headerlink" title="先建好了本地项目，之后需要推到远程仓库"></a>先建好了本地项目，之后需要推到远程仓库</h3></blockquote>
+<pre><code># 如果项目创建时没有初始化为git仓库，需要先执行
+$ git init
+
+# init后默认时master分支，如有必要，先创建并切换到自己的分支上
+$ git checkout -b myBranch
+
+# 本地仓库关联远程仓库
+$ git remote add origin git@github.com:appleshell/learn.git
+
+# 本地仓库代码推送到远程仓库
+$ git push origin &lt;本地分支&gt;:&lt;远程分支&gt;</code></pre><blockquote>
+<h3 id="clone远程仓库用git-clone-url-，clone下来的代码默认分支是master，有时候我们需要clone非master分支的代码"><a href="#clone远程仓库用git-clone-url-，clone下来的代码默认分支是master，有时候我们需要clone非master分支的代码" class="headerlink" title="clone远程仓库用git clone [url]，clone下来的代码默认分支是master，有时候我们需要clone非master分支的代码"></a>clone远程仓库用<code>git clone [url]</code>，clone下来的代码默认分支是master，有时候我们需要clone非master分支的代码</h3></blockquote>
+<pre><code>$ git clone -b [branch] [url]</code></pre><blockquote>
+<h3 id="从远程仓库获取最新代码合并到本地分支"><a href="#从远程仓库获取最新代码合并到本地分支" class="headerlink" title="从远程仓库获取最新代码合并到本地分支"></a>从远程仓库获取最新代码合并到本地分支</h3></blockquote>
+<p>  方式一：</p>
+<pre><code># 拉取远程仓库指定分支代码并合并到本地分支
+$ git pull origin [branch]</code></pre><p>  方式二：</p>
+<pre><code># 拉取远程仓库指定分支代码
+$ git fetch origin [branch]
+
+# 对比本地分支和远程分支差异
+$ git log -p [local_branch]..origin/[remote_branch]
+
+# 合并最新代码到本地分支
+$ git merge origin/[remote_branch]</code></pre><p>  推荐方式二，可以在合并前查看差异，解决冲突；方式一直接合并，没法提前处理冲突。这里需要理解<code>git pull</code>和<code>git fetch</code>的<a href="https://www.zhihu.com/question/38305012" target="_blank" rel="noopener">差异</a></p>
+<blockquote>
+<h3 id="强制用远程仓库代码覆盖本地代码"><a href="#强制用远程仓库代码覆盖本地代码" class="headerlink" title="强制用远程仓库代码覆盖本地代码"></a>强制用远程仓库代码覆盖本地代码</h3></blockquote>
+<pre><code>$ git fetch --all
+
+$ git reset --hard origin/master
+
+$ git pull</code></pre><blockquote>
+<h3 id="删除远程分支"><a href="#删除远程分支" class="headerlink" title="删除远程分支"></a>删除远程分支</h3></blockquote>
+<pre><code># 有必要可以先看一下远程有哪些分支
+$ git branch -r
+
+# 删除远程分支
+$ git push -d origin [remote_branch]</code></pre><blockquote>
+<h3 id="git比较两个分支的文件的差异"><a href="#git比较两个分支的文件的差异" class="headerlink" title="git比较两个分支的文件的差异"></a>git比较两个分支的文件的差异</h3></blockquote>
+<pre><code># 显示所有有差异的文件列表
+$ git diff [branch1] [barnch2] --stat
+
+# 显示指定文件的差异
+$ git diff [branch1] [barnch2] [文件路径]
+
+# 显示所有有差异的文件的详细差异内容
+$ git diff [branch1] [barnch2]</code></pre><p>更多有关<code>git diff</code>命令相关的内容，点击<a href="https://www.cnblogs.com/qianqiannian/p/6010219.html" target="_blank" rel="noopener">这里</a></p>
+<blockquote>
+<h3 id="修改分支名称"><a href="#修改分支名称" class="headerlink" title="修改分支名称"></a>修改分支名称</h3></blockquote>
+<p>之前创建的分支，现在分支的名称需要改动，你可以在这个分支基础上再创建一个分支，但是也可以直接修改。</p>
+<pre><code># 本地分支名称重命名
+$ git branch -m oldName newName</code></pre><p>如果你的本地分支已经推送到远程仓库</p>
+<pre><code># 重命名远程分支对应的本地分支名称
+$ git branch -m oldName newName
+
+# 删除远程分支
+$ git push -d origin oldName
+
+# 推送重命名后的分支
+$ git push origin newName</code></pre><blockquote>
+<h3 id="合并commit"><a href="#合并commit" class="headerlink" title="合并commit"></a>合并commit</h3></blockquote>
+<blockquote>
+<h3 id="图形化显示git提交历史"><a href="#图形化显示git提交历史" class="headerlink" title="图形化显示git提交历史"></a>图形化显示git提交历史</h3></blockquote>
+<pre><code>$ git log --graph --decorate --pretty=oneline</code></pre><p>更详细的查看<a href="http://strivingboy.github.io/blog/2014/09/29/better-git-log/" target="_blank" rel="noopener">这里</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/git/" rel="tag"># git</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/22/learn-markdown/" rel="prev" title="markdown语法快速入门">
+      <i class="fa fa-chevron-left"></i> markdown语法快速入门
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/11/28/git-pull%E5%92%8Cgit-fetch%E7%9A%84%E5%8C%BA%E5%88%AB/" rel="next" title="git pull和git fetch的区别">
+      git pull和git fetch的区别 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#先建好了本地项目，之后需要推到远程仓库"><span class="nav-number">1.</span> <span class="nav-text">先建好了本地项目，之后需要推到远程仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clone远程仓库用git-clone-url-，clone下来的代码默认分支是master，有时候我们需要clone非master分支的代码"><span class="nav-number">2.</span> <span class="nav-text">clone远程仓库用git clone [url]，clone下来的代码默认分支是master，有时候我们需要clone非master分支的代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从远程仓库获取最新代码合并到本地分支"><span class="nav-number">3.</span> <span class="nav-text">从远程仓库获取最新代码合并到本地分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#强制用远程仓库代码覆盖本地代码"><span class="nav-number">4.</span> <span class="nav-text">强制用远程仓库代码覆盖本地代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除远程分支"><span class="nav-number">5.</span> <span class="nav-text">删除远程分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git比较两个分支的文件的差异"><span class="nav-number">6.</span> <span class="nav-text">git比较两个分支的文件的差异</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改分支名称"><span class="nav-number">7.</span> <span class="nav-text">修改分支名称</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#合并commit"><span class="nav-number">8.</span> <span class="nav-text">合并commit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图形化显示git提交历史"><span class="nav-number">9.</span> <span class="nav-text">图形化显示git提交历史</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">appshell</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">appshell</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

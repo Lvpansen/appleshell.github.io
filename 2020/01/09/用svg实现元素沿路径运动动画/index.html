@@ -47,14 +47,18 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="appleshell">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;tags&#x2F;markdown&#x2F;index.html">
+  <meta name="description" content="公司的项目，原来打算用canvas实现，后来发现svg有专门的元素实现path动画，这里简要记录下开发过程，以及介绍一下svg的一些知识。">
+<meta name="keywords" content="svg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用svg实现元素沿路径运动动画">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;09&#x2F;%E7%94%A8svg%E5%AE%9E%E7%8E%B0%E5%85%83%E7%B4%A0%E6%B2%BF%E8%B7%AF%E5%BE%84%E8%BF%90%E5%8A%A8%E5%8A%A8%E7%94%BB&#x2F;index.html">
 <meta property="og:site_name" content="appleshell">
+<meta property="og:description" content="公司的项目，原来打算用canvas实现，后来发现svg有专门的元素实现path动画，这里简要记录下开发过程，以及介绍一下svg的一些知识。">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-02-17T13:53:00.362Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/tags/markdown/">
+<link rel="canonical" href="http://yoursite.com/2020/01/09/%E7%94%A8svg%E5%AE%9E%E7%8E%B0%E5%85%83%E7%B4%A0%E6%B2%BF%E8%B7%AF%E5%BE%84%E8%BF%90%E5%8A%A8%E5%8A%A8%E7%94%BB/">
 
 
 <script id="page-configurations">
@@ -62,13 +66,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
     isArchive: false
   };
 </script>
 
-  <title>Tag: markdown | appleshell</title>
+  <title>用svg实现元素沿路径运动动画 | appleshell</title>
   
 
 
@@ -172,50 +176,105 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h1 class="collection-header">markdown
-          <small>Tag</small>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/09/%E7%94%A8svg%E5%AE%9E%E7%8E%B0%E5%85%83%E7%B4%A0%E6%B2%BF%E8%B7%AF%E5%BE%84%E8%BF%90%E5%8A%A8%E5%8A%A8%E7%94%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="appshell">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="appleshell">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          用svg实现元素沿路径运动动画
         </h1>
-      </div>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-09 00:11:16" itemprop="dateCreated datePublished" datetime="2020-01-09T00:11:16+08:00">2020-01-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-02-17 21:53:00" itemprop="dateModified" datetime="2020-02-17T21:53:00+08:00">2020-02-17</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2019</h1>
+        <p>公司的项目，原来打算用canvas实现，后来发现svg有专门的元素实现path动画，这里简要记录下开发过程，以及介绍一下svg的一些知识。</p>
+<a id="more"></a>
+
+<p>实现路径动画，运用的只是点是<strong>SVG SMIL animation动画</strong>，详细的介绍<a href="https://www.zhangxinxu.com/wordpress/2014/08/so-powerful-svg-smil-animation/" target="_blank" rel="noopener">点击这里</a>。当然也需要对svg相关知识有所<a href="https://www.ruanyifeng.com/blog/2018/08/svg.html" target="_blank" rel="noopener">了解</a></p>
+<p>我所实现的效果是：一辆小车可以沿着公路行驶到指定位置。点击目标位置，小车就从当前位置沿公路行驶到目标位置，一共有多个位置点。</p>
+<p>开发之前，需要先了解SVG animation涉及到的元素，路径动画我用到的是<code>&lt;animateMotion&gt;</code>，这个元素的path属性就是运动的路径（使用规则请<a href="https://www.ruanyifeng.com/blog/2018/08/svg.html" target="_blank" rel="noopener">查看这篇文章</a>中的path介绍，或者<a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Tutorial/Paths" target="_blank" rel="noopener">MDN中path</a>的介绍）。</p>
+<p>简单说path就是坐标，多个坐标确定出路径。需求的本质就是让小车在两个坐标点之间运动。最简单的情况就是只有两个点，那就是一条直线。而我所做的需求，路径实际上是一条折线，你可以想象“凹”这个字。那么这就涉及到多个坐标点。</p>
+<p>那么思路就来了，我把每个拐角处的坐标定义成一个数组，比如:</p>
+<pre><code>[{x:0, y: 0}, {x: 0, y: 100}, {x: 20, y: 100}, {x: 20, y: 50}, {x: 40, y:50}]</code></pre><p>然后再把小车需要停下的位置坐标按照路径顺序插入到这个数组中，当点击目标位置时，就把这个数组中起始位置和目标位置之间的坐标数据截取，并生成path属性的值，这样就把小车的路径规划好了。</p>
+<p>路径规划好后，<code>&lt;animateMotion&gt;</code>元素会实现小车的运动，当然是有一些属性来设置运动效果的。</p>
+<p>我实现的路径动画的核心思路就是这样的，唯一麻烦的就是确定各个转折点的坐标和目标位置的坐标，坐标确定好后剩下知识点就是使用<code>&lt;animateMotion&gt;</code>元素的API和属性，使用JS操作数据和DOM的一些常规知识。</p>
+<p>一些优化的点：</p>
+<ol>
+<li>小车在转折点的动画如果想要平滑一点的话（理解就是把点变成圆角）， 需要用到贝塞尔曲线。path属性可以实现各种贝塞尔曲线。</li>
+<li>svg展示出来的就是一张图片，有可能会在不同尺寸的屏幕上显示，如何等比缩放。这就要用到svg的viewbox属性，详细内容点击<a href="https://www.zhangxinxu.com/wordpress/2014/08/svg-viewport-viewbox-preserveaspectratio/" target="_blank" rel="noopener">这里</a></li>
+</ol>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-22T14:40:06+08:00"
-              content="2019-11-22">
-          11-22
-        </time>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/svg/" rel="tag"># svg</a>
+          </div>
 
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/22/learn-markdown/" itemprop="url">
-            <span itemprop="name">markdown语法快速入门</span>
-          </a>
-      </h2>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/24/%E3%80%90%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E3%80%91yarn%E5%AE%89%E8%A3%85node-sass%E5%A4%B1%E8%B4%A5/" rel="prev" title="【问题解决】yarn安装node-sass失败">
+      <i class="fa fa-chevron-left"></i> 【问题解决】yarn安装node-sass失败
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/16/%E5%88%9D%E5%AD%A6Typescript/" rel="next" title="初学Typescript">
+      初学Typescript <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
+  
+  
+  
 
-    </div>
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>

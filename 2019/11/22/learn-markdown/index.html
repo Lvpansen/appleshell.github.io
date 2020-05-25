@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="appleshell" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="markdown 语法快速入门">
+<meta name="keywords" content="markdown">
+<meta property="og:type" content="article">
+<meta property="og:title" content="markdown语法快速入门">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;22&#x2F;learn-markdown&#x2F;index.html">
+<meta property="og:site_name" content="appleshell">
+<meta property="og:description" content="markdown 语法快速入门">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.52z.com&#x2F;upload&#x2F;news&#x2F;image&#x2F;20180621&#x2F;20180621055734_59936.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.52z.com&#x2F;upload&#x2F;news&#x2F;image&#x2F;20180621&#x2F;20180621055734_59936.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;appleshell-images.oss-cn-shanghai.aliyuncs.com&#x2F;images&#x2F;IMG_20141217_142036.jpg">
+<meta property="og:updated_time" content="2020-01-08T16:06:33.337Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;img.52z.com&#x2F;upload&#x2F;news&#x2F;image&#x2F;20180621&#x2F;20180621055734_59936.jpg">
+
+<link rel="canonical" href="http://yoursite.com/2019/11/22/learn-markdown/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>markdown语法快速入门 | appleshell</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">appleshell</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/22/learn-markdown/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="appshell">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="appleshell">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          markdown语法快速入门
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-22 14:40:06" itemprop="dateCreated datePublished" datetime="2019-11-22T14:40:06+08:00">2019-11-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-01-09 00:06:33" itemprop="dateModified" datetime="2020-01-09T00:06:33+08:00">2020-01-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/markdown/" itemprop="url" rel="index">
+                    <span itemprop="name">markdown</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>markdown 语法快速入门</p>
+<a id="more"></a>
+
+<h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><p>标题的语法有两种形式，Setext 和 Atx。</p>
+<ol>
+<li>Setext，用底线的形式，利用<code>=</code>（最高阶标题）和<code>-</code>（第二阶标题）：</li>
+</ol>
+<p>最高阶标题，渲染成 HTML 中的<code>h1</code>标签</p>
+<pre><code>最高阶标题
+=========</code></pre><p>第二阶标题，渲染成 HTML 中的<code>h2</code>标签</p>
+<pre><code>第二阶标题
+----------</code></pre><ol start="2">
+<li>Atx，用行首的#字符标识标题的阶数，1-6 个#字符标识第 1-第 6 阶标题</li>
+</ol>
+<p>第一阶，渲染成 HTML 中的<code>h1</code>标签</p>
+<pre><code># 第一阶</code></pre><p>第二阶，渲染成 HTML 中的<code>h2</code>标签</p>
+<pre><code>## 第二阶</code></pre><p>第三阶，渲染成 HTML 中的<code>h3</code>标签</p>
+<pre><code>### 第三阶</code></pre><p>第四到六阶依此类推</p>
+<h2 id="段落"><a href="#段落" class="headerlink" title="段落"></a>段落</h2><p>一个段落由一个以上的连接的行句组成，而一个以上的空行则会划分出不同的段落，一般的段落不需要用空白或者换行缩进。</p>
+<p>空行的定义时显示上看起来像是空行，就会被视为空行，例如一行只有空白或者 tab，那这行就会被视为空行。</p>
+<p>段落并没有特殊的标记符号，需要注意的只有换行。换行有两种方式：</p>
+<ol>
+<li>用一个以上的空白行来实现，这种方式的效果是每个段落被渲染在<code>&lt;p&gt;&lt;/p&gt;</code>标签中。</li>
+<li>在段落结尾按入两个空格，然后回车，这种方式的效果是在段落结尾插入了<code>&lt;br /&gt;</code>标签。</li>
+</ol>
+<h2 id="区块"><a href="#区块" class="headerlink" title="区块"></a>区块</h2><p>区块引用使用 email 形式的<code>&gt;</code>叫括号</p>
+<blockquote>
+<p>这是一个区块</p>
+</blockquote>
+<pre><code>&gt; 这是一个区块</code></pre><p>区块可以嵌套，区块内也可以包含其他 markdown 语法，例如标题、列表、代码区块等</p>
+<blockquote>
+<p>这是一个引用区块</p>
+<blockquote>
+<p>区块里嵌套了一个区块</p>
+</blockquote>
+<ul>
+<li>区块里的列表 1</li>
+<li>区块里的列表 2</li>
+</ul>
+<p>区块里嵌套代码块：</p>
+<pre><code>console.log(&apos;我是区块里的代码块&apos;)</code></pre></blockquote>
+<blockquote>
+</blockquote>
+<h2 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h2><p>使用<code>*</code>和<code>_</code>来标记，包括斜体和粗体两种。</p>
+<p>这是<em>斜体文本</em>，这是<em>斜体文本</em>位于段落中间</p>
+<pre><code>这是*斜体文本*，这是*斜体文本*位于段落中间</code></pre><p>这是 <em>斜体文本</em></p>
+<pre><code>这是 _斜体文本_</code></pre><p>这是 <em>斜体文本</em> 位于段落中间</p>
+<pre><code>这是 _斜体文本_ 位于段落中间 (如果斜体文本在段落中，&quot;_&quot;符号前后需要有空格，前或后至少一个位置有空格，但是空格会被渲染出来，所以斜体还是用&quot;*&quot;表示比较好)</code></pre><p>这是<strong>粗体文本</strong></p>
+<pre><code>这是**粗体文本**</code></pre><p>这是<strong>粗体文本</strong></p>
+<pre><code>这是__粗体文本__</code></pre><p>这是<strong><em>粗斜体文本</em></strong></p>
+<pre><code>这是***粗斜体文本***</code></pre><p>这是<strong><em>粗斜体文本</em></strong></p>
+<pre><code>这是___粗斜体文本___</code></pre><h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><ol>
+<li>无序列表，使用<code>*</code>、<code>+</code>、<code>-</code>来标识</li>
+</ol>
+<blockquote>
+<ul>
+<li>Red</li>
+<li>Green</li>
+</ul>
+</blockquote>
+<pre><code>* Red
+* Green</code></pre><blockquote>
+<ul>
+<li>Red</li>
+<li>Green</li>
+</ul>
+</blockquote>
+<pre><code>+ Red
++ Green</code></pre><blockquote>
+<ul>
+<li>Red</li>
+<li>Green</li>
+</ul>
+</blockquote>
+<pre><code>- Red
+- Green</code></pre><p>列表之间可以插入段落，每个段落需要缩进 4 个空格或者 1 个制表符</p>
+<ul>
+<li><p>这是列表第一项</p>
+<p>这是一个段落</p>
+<p>这是又一个段落</p>
+</li>
+<li><p>这是列表第二项</p>
+</li>
+</ul>
+<p>这是写法：</p>
+<pre><code>* 这是列表第一项
+
+  这是一个段落
+
+  这是又一个段落
+
+* 这是列表第二项</code></pre><p>列表中可以插入引用，<code>&gt;</code>符号需要缩进</p>
+<ul>
+<li><p>这是列表第一项</p>
+<blockquote>
+<p>这是一个引用</p>
+</blockquote>
+</li>
+</ul>
+<p>这是写法：</p>
+<pre><code>* 这是列表第一项
+
+  &gt; 这是一个引用</code></pre><p>列表中插入代码块，代码块需要缩进两次</p>
+<ul>
+<li><p>这是列表第一项</p>
+<pre><code>console.log(&apos;列表中的代码块，缩进了8个空格&apos;)</code></pre></li>
+</ul>
+<p>这是写法：</p>
+<pre><code>* 这是列表第一项
+
+        console.log(&apos;列表中的代码块，缩进了8个空格&apos;)</code></pre><ol start="2">
+<li>有序列表，使用数字加英文句点标识</li>
+</ol>
+<blockquote>
+<ol>
+<li>Bird</li>
+<li>Mchale</li>
+<li>Parish</li>
+</ol>
+</blockquote>
+<pre><code>1. Bird
+2. Mchale
+3. Parish</code></pre><h2 id="分隔线"><a href="#分隔线" class="headerlink" title="分隔线"></a>分隔线</h2><p>使用三个以上的<code>*</code>，<code>-</code>，<code>_</code>来建立一个分隔线，行内不能有其他内容</p>
+<hr>
+<p>隔开</p>
+<hr>
+<p>隔开</p>
+<hr>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p>链接语法分为：<strong>行内</strong>和<strong>参考</strong>两种形式</p>
+<ol>
+<li>行内</li>
+</ol>
+<p>这是一个链接去<a href="https://www.baidu.com" target="_blank" rel="noopener">百度</a></p>
+<pre><code>这是一个链接去[百度](https://www.baidu.com)</code></pre><p>这是一个链接去<a href="https://www.baidu.com" target="_blank" rel="noopener" title="百度">百度</a>，加上了 title 属性。</p>
+<pre><code>这是一个链接去[百度](https://www.baidu.com/ &quot;百度&quot;)，加上了title属性。</code></pre><ol start="2">
+<li>参考</li>
+</ol>
+<p>学习 markdown，我参考了两篇文章：<a href="https://www.appinn.com/markdown/basic.html" target="_blank" rel="noopener">快速入门</a>和<a href="https://www.appinn.com/markdown/" target="_blank" rel="noopener" title="这里是链接的title属性">详细介绍</a></p>
+<pre><code>学习markdown，我参考了两篇文章：[快速入门][1]和[详细介绍][2]
+
+[1]: https://www.appinn.com/markdown/basic.html
+[2]: https://www.appinn.com/markdown/ &quot;这里是链接的title属性&quot;</code></pre><p>参考形式的链接可以定义一次，而且可以集中定义在文本的某处，方便查看，定义好的链接可以多处使用。</p>
+<p><a href="http://www.google.com" target="_blank" rel="noopener">http://www.google.com</a></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><ol>
+<li>在段落中插入代码段，使用”`”反引号来标识</li>
+</ol>
+<p>在 html 中，我们用<code>&lt;h1&gt;&lt;/h1&gt;</code>标签来显示标题；在 js 中我们使用<code>console.log()</code>来打印日志。</p>
+<pre><code>在html中，我们用`&lt;h1&gt;&lt;/h1&gt;`标签来显示标题；在js中我们使用`console.log()`来打印日志。</code></pre><ol start="2">
+<li>建立一个格式化好的代码块，每行缩进 4 个空格或者一个 tab:<blockquote>
+</blockquote>
+<pre><code>function print() {
+    console.log(&apos;hello, hexo&apos;)
+}</code></pre></li>
+</ol>
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><p>图片的语法和链接很像, 也分为行内和参考两种形式</p>
+<ol>
+<li>行内</li>
+</ol>
+<p><img src="http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg" alt="天空" title="蓝天碧水"></p>
+<pre><code>![天空](http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg &quot;蓝天碧水&quot;)</code></pre><ol start="2">
+<li>参考</li>
+</ol>
+<p><img src="http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg" alt="天空" title="蓝天碧水"></p>
+<pre><code>![天空][id]
+
+[id]: http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg &quot;蓝天碧水&quot;</code></pre><p><img src="https://appleshell-images.oss-cn-shanghai.aliyuncs.com/images/IMG_20141217_142036.jpg" alt="我放在阿里云上的图片"></p>
+<h2 id="反斜杠转义"><a href="#反斜杠转义" class="headerlink" title="反斜杠转义"></a>反斜杠转义</h2><p>markdown 中有不少语法是使用一些符号来实现的，当我们需要显示这些符号本身时，就需要反斜杠来帮忙。</p>
+<pre><code>\   反斜线
+`   反引号
+*   星号
+_   底线
+{}  花括号
+[]  方括号
+()  括弧
+#   井字号
++   加号
+-   减号
+.   英文句点
+!   惊叹号</code></pre>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/markdown/" rel="tag"># markdown</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/22/hello-world/" rel="prev" title="Hello World">
+      <i class="fa fa-chevron-left"></i> Hello World
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/11/26/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" rel="next" title="git常用命令">
+      git常用命令 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#标题"><span class="nav-number">1.</span> <span class="nav-text">标题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#段落"><span class="nav-number">2.</span> <span class="nav-text">段落</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#区块"><span class="nav-number">3.</span> <span class="nav-text">区块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字体"><span class="nav-number">4.</span> <span class="nav-text">字体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列表"><span class="nav-number">5.</span> <span class="nav-text">列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分隔线"><span class="nav-number">6.</span> <span class="nav-text">分隔线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#链接"><span class="nav-number">7.</span> <span class="nav-text">链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">8.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片"><span class="nav-number">9.</span> <span class="nav-text">图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反斜杠转义"><span class="nav-number">10.</span> <span class="nav-text">反斜杠转义</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">appshell</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">appshell</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -47,14 +47,18 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="appleshell">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;tags&#x2F;markdown&#x2F;index.html">
+  <meta name="description" content="git merge和git rebase所做的事是一样的，都是将一个分支上的代码合并到另一个分支上，但是两个合并后所产生的提交记录会有所不同，而且在处理代码冲突上也有所不同。">
+<meta name="keywords" content="git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git merge和git rebase的区别">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;29&#x2F;git-merge%E5%92%8Cgit-rebase%E7%9A%84%E5%8C%BA%E5%88%AB&#x2F;index.html">
 <meta property="og:site_name" content="appleshell">
+<meta property="og:description" content="git merge和git rebase所做的事是一样的，都是将一个分支上的代码合并到另一个分支上，但是两个合并后所产生的提交记录会有所不同，而且在处理代码冲突上也有所不同。">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-12-15T16:31:39.175Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/tags/markdown/">
+<link rel="canonical" href="http://yoursite.com/2019/11/29/git-merge%E5%92%8Cgit-rebase%E7%9A%84%E5%8C%BA%E5%88%AB/">
 
 
 <script id="page-configurations">
@@ -62,13 +66,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
     isArchive: false
   };
 </script>
 
-  <title>Tag: markdown | appleshell</title>
+  <title>git merge和git rebase的区别 | appleshell</title>
   
 
 
@@ -172,50 +176,120 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h1 class="collection-header">markdown
-          <small>Tag</small>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/29/git-merge%E5%92%8Cgit-rebase%E7%9A%84%E5%8C%BA%E5%88%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="appshell">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="appleshell">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          git merge和git rebase的区别
         </h1>
-      </div>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-29 18:22:47" itemprop="dateCreated datePublished" datetime="2019-11-29T18:22:47+08:00">2019-11-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-12-16 00:31:39" itemprop="dateModified" datetime="2019-12-16T00:31:39+08:00">2019-12-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git-github/" itemprop="url" rel="index">
+                    <span itemprop="name">git & github</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2019</h1>
+        <p><code>git merge</code>和<code>git rebase</code>所做的事是一样的，都是将一个分支上的代码合并到另一个分支上，但是两个合并后所产生的提交记录会有所不同，而且在处理代码冲突上也有所不同。</p>
+<a id="more"></a>
+
+<blockquote>
+<h2 id="git-merge"><a href="#git-merge" class="headerlink" title="git merge"></a>git merge</h2></blockquote>
+<ul>
+<li>master分支的最新提交记录是<strong>commit-master1</strong></li>
+<li>从master分支上切出feature分支</li>
+<li>在feature分支上进行了开发，产生了两个提交记录：<strong>commit-feature1</strong>和<strong>commit-feature2</strong></li>
+</ul>
+<p>情况1：master分支上没有新的提交记录</p>
+<ul>
+<li>当前分支为master，执行 <code>git merge feature</code>，<strong>commit-feature1</strong>和<strong>commit-feature2</strong>两个提交记录会被合并到master分支上，这两个提交记录位于<strong>commit-master1</strong>前面，feature分支没有变化</li>
+</ul>
+<p>情况2：master分支上有新的提交记录<strong>commit-master2</strong>（相当于你在feature分支上开发时，有人往master分支上提交了代码）</p>
+<ul>
+<li>当前分支为master，执行 <code>git merge feature</code>，<strong>commit-feature1</strong>和<strong>commit-feature2</strong>两个提交记录会被合并到master分支上，这两个提交记录会和<strong>commit-master2</strong>提交记录按照时间顺序排在<strong>commit-master1</strong>前面。最后生成一个新的commit提交记录<strong>commit-master-merge</strong>（这个记录里可能会包含解决的冲突），位于提交记录的最前面。feature分支也是没有变化</li>
+</ul>
+<p>可以实践一下，然后查看git的图形化的提交记录</p>
+<p><a href="https://www.html.cn/archives/10077" target="_blank" rel="noopener">参考一</a></p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-22T14:40:06+08:00"
-              content="2019-11-22">
-          11-22
-        </time>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/git/" rel="tag"># git</a>
+          </div>
 
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/22/learn-markdown/" itemprop="url">
-            <span itemprop="name">markdown语法快速入门</span>
-          </a>
-      </h2>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/28/git-pull%E5%92%8Cgit-fetch%E7%9A%84%E5%8C%BA%E5%88%AB/" rel="prev" title="git pull和git fetch的区别">
+      <i class="fa fa-chevron-left"></i> git pull和git fetch的区别
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/11/29/css%E4%B8%ADobject-fig%E5%92%8Cobject-position/" rel="next" title="css中object-fig和object-position">
+      css中object-fig和object-position <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
+  
+  
+  
 
-    </div>
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
@@ -244,6 +318,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-merge"><span class="nav-number">1.</span> <span class="nav-text">git merge</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

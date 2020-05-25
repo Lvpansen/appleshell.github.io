@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="appleshell" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="这篇文章主要介绍 win10 安装 mongoDB4.0 过程及安装过程中一些问题的解决方法。">
+<meta name="keywords" content="mongoDB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mongoDB的安装">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;22&#x2F;mongoDB%E7%9A%84%E5%AE%89%E8%A3%85&#x2F;index.html">
+<meta property="og:site_name" content="appleshell">
+<meta property="og:description" content="这篇文章主要介绍 win10 安装 mongoDB4.0 过程及安装过程中一些问题的解决方法。">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;2018091918200759?watermark&#x2F;2&#x2F;text&#x2F;aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2R0YTA1MDI=&#x2F;font&#x2F;5a6L5L2T&#x2F;fontsize&#x2F;400&#x2F;fill&#x2F;I0JBQkFCMA==&#x2F;dissolve&#x2F;70">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190818135529950.png?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDE5ODk2NQ==,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2020-01-08T16:06:33.339Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;2018091918200759?watermark&#x2F;2&#x2F;text&#x2F;aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2R0YTA1MDI=&#x2F;font&#x2F;5a6L5L2T&#x2F;fontsize&#x2F;400&#x2F;fill&#x2F;I0JBQkFCMA==&#x2F;dissolve&#x2F;70">
+
+<link rel="canonical" href="http://yoursite.com/2019/12/22/mongoDB%E7%9A%84%E5%AE%89%E8%A3%85/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>mongoDB的安装 | appleshell</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">appleshell</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/22/mongoDB%E7%9A%84%E5%AE%89%E8%A3%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="appshell">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="appleshell">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          mongoDB的安装
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-22 16:40:08" itemprop="dateCreated datePublished" datetime="2019-12-22T16:40:08+08:00">2019-12-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-01-09 00:06:33" itemprop="dateModified" datetime="2020-01-09T00:06:33+08:00">2020-01-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mongoDB/" itemprop="url" rel="index">
+                    <span itemprop="name">mongoDB</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>这篇文章主要介绍 win10 安装 mongoDB4.0 过程及安装过程中一些问题的解决方法。</p>
+<a id="more"></a>
+
+<h2 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h2><p>mongoDB 的下载地址点击<a href="https://www.mongodb.org/dl/win32" target="_blank" rel="noopener">这里</a>。我下载的是 msi 安装包。</p>
+<h2 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h2><p>安装过程基本是傻瓜式的，详细的内容查看<a href="https://blog.csdn.net/qq_20084101/article/details/82261195" target="_blank" rel="noopener">这篇文章</a>。但是安装过程中需要注意几个问题：</p>
+<ul>
+<li>到下图这一步时，不要勾选<code>Install MongoDB Compass</code>，因为这一步会用很长时间。<code>MongoDB Compass</code>是个图形工具，方便直接管理 mongoDB 数据。<br><img src="https://img-blog.csdn.net/2018091918200759?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2R0YTA1MDI=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="no compass"></li>
+<li>安装过程中如果出现<code>service MongoDB failed to start，verify that you have sufficient privileges to start system services.</code>提示，如图：<br><img src="https://img-blog.csdnimg.cn/20190818135529950.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDE5ODk2NQ==,size_16,color_FFFFFF,t_70" alt="start warning"><br>这种情况下使用<code>net start MongoDB</code>命令启动，会报失败。<br>解决办法是：点击<code>Ignore</code>，先忽略。然后在 mongoDB 安装目录下，找到 bin 文件夹下的<code>mongod.cfg</code>文件，打开，删掉最后一行的<code>mp:</code>，重启服务，就可以成功启动。参考<a href="https://blog.csdn.net/qq_20084101/article/details/82261195" target="_blank" rel="noopener">这篇文章</a></li>
+</ul>
+<h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><p>启动服务时，有可能会提示命令 mongod 命令不存在，所以需要配置环境变量</p>
+<ol>
+<li>右击“我的电脑” &gt; 打开“高级系统设置” &gt; 打开“环境变量” &gt; 点击用户变量中的“Path”，打开编辑环境变量的弹框 &gt; 点击“新建”，把 mongoDB 安装目录下 bin 文件夹的完整路径复制进去。点击确定。</li>
+</ol>
+<h2 id="启动-mongoDB"><a href="#启动-mongoDB" class="headerlink" title="启动 mongoDB"></a>启动 mongoDB</h2><p>启动 mongoDB 分为启动 mongoDB 服务（存储数据的地方）和 mongoDB 客户端（操作数据的地方）</p>
+<h3 id="启动-mongoDB-服务"><a href="#启动-mongoDB-服务" class="headerlink" title="启动 mongoDB 服务"></a>启动 mongoDB 服务</h3><blockquote>
+<p>方法一</p>
+</blockquote>
+<ol>
+<li><p>在 mongoDB 安装目录下的 bin 文件中打开命令窗口</p>
+</li>
+<li><p>输入命令：<code>mongod --dbpath D:\tool\MongoDB\data</code>，然后启动服务。后面的路径根据你自己的 mongoDB 安装路径进行修改。</p>
+</li>
+<li><p>如果不想在命令窗口打印日志，可先在 log 文件夹下新建名为<code>mongo.log</code>的文件，然后执行<code>mongod --dbpath D:\tool\MongoDB\data --logpath D:\tool\MongoDB\log\mongo.log</code>命令。</p>
+<p>注：–dbpath 是指定数据库存放目录，要注意 dbpath 前有两个“-”。如果想换访问的端口号，可以在命令后加<code>--port 10086</code>，这样就切换到了 10086 端口。</p>
+</li>
+<li><p>命令行最后打印出：<code>I NETWORK [threadl] waiting for connections on port 27017</code>，则表示启动成功。</p>
+</li>
+<li><p>在浏览器中输入<code>http://localhost:27017</code>,可以看到浏览器显示<code>It looks like you are trying to access MongoDB over HTTP on the native driver port.</code></p>
+</li>
+</ol>
+<blockquote>
+<p>方法二</p>
+</blockquote>
+<ol>
+<li><p>打开命令窗口</p>
+</li>
+<li><p>输入命令<code>net start MongoDB</code></p>
+</li>
+</ol>
+<p>注意: 这种方法可能会出现一些问题</p>
+<ul>
+<li><p>无法创建服务。在输入命令后提示“服务名无效”或者在任务管理器中没有找到该服务</p>
+<p>解决办法：以管理员身份运行 cmd，重新启动服务。</p>
+</li>
+<li><p>启动服务报“发生系统错误 5。拒绝访问。”</p>
+<p>解决办法：以管理员身份运行 cmd，重新启动服务。</p>
+</li>
+</ul>
+<h3 id="启动-mongoDB-客户端"><a href="#启动-mongoDB-客户端" class="headerlink" title="启动 mongoDB 客户端"></a>启动 mongoDB 客户端</h3><ol>
+<li>打开 cmd 命令窗口</li>
+<li>执行<code>mongo</code>命令，就可以进入 mongo 的客户端，进而进行数据库操作。</li>
+</ol>
+<h3 id="一些问题"><a href="#一些问题" class="headerlink" title="一些问题"></a>一些问题</h3><ol>
+<li><p>mongod 命令默认启动的地址是 localhost，也就是本地地址（也可以用 127.0.0.1）链接。如果想要切换成本机 IP，可以按照下面的方式:</p>
+<pre><code>/* 启动服务，bind_ip参数跟的是要切换的IP */
+mongod --dbpath D:\tool\MongoDB\data --logpath D:\tool\MongoDB\log\mongo.log --bind_ip 10.0.1.109
+
+/* 启动客户端，命令后面直接跟IP:端口，如果是默认27017端口，则不用加 */
+mongo 10.0.1.109</code></pre></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/mongoDB/" rel="tag"># mongoDB</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/20/VS-Code%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="prev" title="VS Code的使用">
+      <i class="fa fa-chevron-left"></i> VS Code的使用
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/12/22/%E5%88%9D%E5%AD%A6mongoDB/" rel="next" title="初学mongoDB">
+      初学mongoDB <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载地址"><span class="nav-number">1.</span> <span class="nav-text">下载地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装过程"><span class="nav-number">2.</span> <span class="nav-text">安装过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置环境变量"><span class="nav-number">3.</span> <span class="nav-text">配置环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动-mongoDB"><span class="nav-number">4.</span> <span class="nav-text">启动 mongoDB</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动-mongoDB-服务"><span class="nav-number">4.1.</span> <span class="nav-text">启动 mongoDB 服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动-mongoDB-客户端"><span class="nav-number">4.2.</span> <span class="nav-text">启动 mongoDB 客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些问题"><span class="nav-number">4.3.</span> <span class="nav-text">一些问题</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">appshell</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">appshell</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

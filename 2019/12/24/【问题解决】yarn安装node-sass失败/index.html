@@ -47,14 +47,18 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="appleshell">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;tags&#x2F;markdown&#x2F;index.html">
+  <meta name="description" content="记录解决react项目给中安装node-sass依赖失败的原因和方法">
+<meta name="keywords" content="node">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【问题解决】yarn安装node-sass失败">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;24&#x2F;%E3%80%90%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E3%80%91yarn%E5%AE%89%E8%A3%85node-sass%E5%A4%B1%E8%B4%A5&#x2F;index.html">
 <meta property="og:site_name" content="appleshell">
+<meta property="og:description" content="记录解决react项目给中安装node-sass依赖失败的原因和方法">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-02-09T14:31:25.875Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/tags/markdown/">
+<link rel="canonical" href="http://yoursite.com/2019/12/24/%E3%80%90%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E3%80%91yarn%E5%AE%89%E8%A3%85node-sass%E5%A4%B1%E8%B4%A5/">
 
 
 <script id="page-configurations">
@@ -62,13 +66,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
     isArchive: false
   };
 </script>
 
-  <title>Tag: markdown | appleshell</title>
+  <title>【问题解决】yarn安装node-sass失败 | appleshell</title>
   
 
 
@@ -172,50 +176,117 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h1 class="collection-header">markdown
-          <small>Tag</small>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/24/%E3%80%90%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E3%80%91yarn%E5%AE%89%E8%A3%85node-sass%E5%A4%B1%E8%B4%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="appshell">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="appleshell">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【问题解决】yarn安装node-sass失败
         </h1>
-      </div>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-24 15:36:53" itemprop="dateCreated datePublished" datetime="2019-12-24T15:36:53+08:00">2019-12-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-02-09 22:31:25" itemprop="dateModified" datetime="2020-02-09T22:31:25+08:00">2020-02-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2019</h1>
+        <p>记录解决react项目给中安装node-sass依赖失败的原因和方法</p>
+<a id="more"></a>
+
+<p>node-sass下载在国内受到限制，如果不能科学上网，一般通过设置淘宝镜像：</p>
+<ul>
+<li><p>yarn：</p>
+<pre><code>yarn config set registry https://registry.npm.taobao.org -g
+yarn config get registry // 查看设置的镜像地址</code></pre></li>
+<li><p>npm：</p>
+<pre><code>npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/
+npm config get registry // 查看设置的镜像地址</code></pre></li>
+</ul>
+<p>使用上述解决办法基本就可以解决node-sass下载不成功的问题。</p>
+<p>但是我在设置好淘宝镜像后，下载node-sass过程中仍然提示失败，查看报错信息，提示node版本和node-sass版本不匹配，<a href="https://github.com/sass/node-sass/tags" target="_blank" rel="noopener">点击这里</a>查看不同版本node-sass所对应的node版本。</p>
+<p>我的node版本安装的是10.15.3，项目中node-sass的版本是4.7.2，但是4.7.2版本并不支持10.x.x版本的node，所以只好更改node版本。</p>
+<p>当然，我不可能把node卸载了，再装一个低版本的，这样太麻烦。推荐使用nvm管理电脑上的node版本，<a href="https://github.com/coreybutler/nvm-windows/releases" target="_blank" rel="noopener">nvm-windows下载地址</a>。Mac可以使用<a href="https://github.com/nvm-sh/nvm" target="_blank" rel="noopener">nvm</a>或者<a href="https://github.com/tj/n" target="_blank" rel="noopener">n</a>，<a href="https://github.com/tj/n" target="_blank" rel="noopener">n</a>不支持windows系统。</p>
+<p>nvm的使用请参考<a href="https://www.jianshu.com/p/17d3249e0619" target="_blank" rel="noopener">这篇文章</a>。</p>
+<p>配置npm源还有一种方式是使用nrm。安装nrm并设置淘宝源：</p>
+<pre><code>npm i -g nrm
+nrm use taobao</code></pre><p>使用<code>npm ls</code>查看其他源的地址：</p>
+<pre><code>nrm ls
+
+  npm -------- https://registry.npmjs.org/
+  yarn ------- https://registry.yarnpkg.com/
+  cnpm ------- http://r.cnpmjs.org/
+* taobao ----- https://registry.npm.taobao.org/
+  nj --------- https://registry.nodejitsu.com/
+  npmMirror -- https://skimdb.npmjs.com/registry/
+  edunpm ----- http://registry.enpmjs.org/</code></pre>
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-22T14:40:06+08:00"
-              content="2019-11-22">
-          11-22
-        </time>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/node/" rel="tag"># node</a>
+          </div>
 
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/22/learn-markdown/" itemprop="url">
-            <span itemprop="name">markdown语法快速入门</span>
-          </a>
-      </h2>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/22/%E5%88%9D%E5%AD%A6mongoDB/" rel="prev" title="初学mongoDB">
+      <i class="fa fa-chevron-left"></i> 初学mongoDB
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/01/09/%E7%94%A8svg%E5%AE%9E%E7%8E%B0%E5%85%83%E7%B4%A0%E6%B2%BF%E8%B7%AF%E5%BE%84%E8%BF%90%E5%8A%A8%E5%8A%A8%E7%94%BB/" rel="next" title="用svg实现元素沿路径运动动画">
+      用svg实现元素沿路径运动动画 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
+  
+  
+  
 
-    </div>
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
