@@ -99,7 +99,7 @@ tags: Javascript
 示例：
 
   ```js
-  new (fn, arg) {
+  new (fn, ...arg) {
     const obj = Object.create(fn.prototype)
     const res = fn.apply(obj, arg)
     return typeof res === 'object' ? res : obj
