@@ -91,3 +91,19 @@ tags: Javascript
   res1.sort((a, b) => a - b)
   ```
 知识点：数组的扁平化、去重、排序实现方法，有些版本可能会使用数组的合并方法。
+
+> ### 如何实现一个 new
+
+思路：前提一定要清楚new干了什么或者说new的步骤是什么
+
+示例：
+
+  ```js
+  new (fn, arg) {
+    const obj = Object.create(fn.prototype)
+    const res = fn.apply(obj, arg)
+    return typeof res === 'object' ? res : obj
+  }
+  ```
+
+知识点：考察new创建对象的步骤。
