@@ -68,7 +68,7 @@ tags: Javascript
   var res = arr.flat(Infinity)
 
   var res = []
-  function flatArr(arr) {
+  function flatArr(arr) {  // 递归
       arr.forEach(item => {
           if(Array.isArray(item)) {
               return flatArr(item)
