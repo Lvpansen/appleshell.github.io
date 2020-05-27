@@ -107,3 +107,19 @@ tags: Javascript
   ```
 
 知识点：考察new创建对象的步骤。
+
+> ### 合并下面两个数组，['A1','A2','B1','B2','C1','C2','D1','D2']和['A','B','C','D']，得到["A1", "A2", "A", "B1", "B2", "B", "C1", "C2", "C", "D1", "D2", "D"]
+
+示例：
+
+  ```js
+  var arr1 = ['A1','A2','B1','B2','C1','C2','D1','D2']
+  var arr2 = ['A','B','C','D']
+
+  var str = arr1.toString()
+  arr2.forEach(item => {
+      var reg = new RegExp(`${item}2`)
+      str = str.replace(reg, `${item}2,${item}`)
+  })
+  str.split(',')
+  ```
