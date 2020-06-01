@@ -108,7 +108,9 @@ tags: Javascript
 
 知识点：考察new创建对象的步骤。
 
-> ### 合并下面两个数组，['A1','A2','B1','B2','C1','C2','D1','D2']和['A','B','C','D']，得到["A1", "A2", "A", "B1", "B2", "B", "C1", "C2", "C", "D1", "D2", "D"]
+> ### 合并下面两个数组
+
+`['A1','A2','B1','B2','C1','C2','D1','D2']`和`['A','B','C','D']`，得到`['A1', 'A2', 'A', 'B1', 'B2', 'B', 'C1', 'C2', 'C', 'D1', 'D2', 'D']`
 
 示例：
 
@@ -123,3 +125,37 @@ tags: Javascript
   })
   str.split(',')
   ```
+> ### 使用迭代的方式实现flatten
+
+  示例：
+
+    ```js
+      var arr = [1,2,[3,4,[5,6,7]],8,[9,10,11,[12,13,[14,15],16]],17]
+      function flatten(arr) {
+        // ...
+      }
+      flatten(arr) // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+    ```
+
+  思路：不考虑限制的话可以使用Array.flat()，借助字符串，递归实现。迭代的方式主要借助while循环。
+
+    ```js
+    var arr = [1,2,[3,4,[5,6,7]],8,[9,10,11,[12,13,[14,15],16]],17]
+    function flatten(arr) {
+      while(arr.some(item => Array.isArray(item))) {
+        arr = [].concat(...arr)
+      }
+      return arr
+    }
+    flatten(arr)
+    ```
+  上述写法主要依赖`while循环`和数组的`concat`方法。while循环平时没有for循环，forEach用的多，需要理解其用法。
+
+  concat方法用来合并两个或者多个数组，其参数可以是具体的值或者数组，具体的值会被复制进新数组，数组会被展开一层放进新数组。这里的用法就是`...`展开操作符将目标数组展开成值和数组作为concat的参数，每循环一次就flat一层，直到arr中不存在数组。主要理解点如下：
+
+    ```js
+    var alpha = ['a']
+    var res = alpha.concat(1, [2, 3])  // 这里可以用...[1, [2,3]]代替
+    console.log(res) // ['a', 1, 2, 3]
+    ```
+  知识点：while循环、...展开操作符、[Array.concat](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/concat)
