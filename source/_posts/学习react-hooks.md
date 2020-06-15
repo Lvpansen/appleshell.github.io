@@ -112,6 +112,13 @@ React的函数组件，在早期必须是纯函数，不能包含状态，也不
 ## useReducer
 当函数组件中有多个状态（基于相同的逻辑）时，可以用useReducer进行state的管理。
 
+Q: When should we use useState or useReduce to manage the component state?
+
+A: For independent things (isHovering and textInput) , multiple useState;
+
+  For things that change together (isFecting and fetcheditems), or if their next state depends on previous (todos), I prefer useReducer.
+
+
 [参考文章](https://medium.com/trabe/react-usereducer-hook-2b1331bb768)
 
 ## useCallback
