@@ -20,5 +20,7 @@ tags: Babel
 
 以上这些点先通过文章看一下，然后需要看[官方文档][2]，有助于理解。当然手敲代码是必须的。
 
+[这是一篇babel科普性质的文章](https://zhuanlan.zhihu.com/p/129089156)
+
 [1]: https://juejin.im/post/5e477139f265da574c566dda
 [2]: https://www.babeljs.cn/docs/
