@@ -123,6 +123,8 @@ A: For independent things (isHovering and textInput) , multiple useState;
 
 ## useCallback
 
+[关于useCallback的issue](https://github.com/facebook/react/issues/14099#thread-subscription-status)
+
 ## useMemo
 
 ## useRef
