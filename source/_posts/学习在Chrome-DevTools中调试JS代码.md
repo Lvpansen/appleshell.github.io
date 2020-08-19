@@ -8,6 +8,8 @@ tags:
 
 <!-- more -->
 
-[参考文章](https://developers.google.com/web/tools/chrome-devtools/javascript)
+[参考文章-官方文档](https://developers.google.com/web/tools/chrome-devtools/javascript)
+
+[How to stop using console.log() and start using your browser’s debugger](https://medium.com/datadriveninvestor/stopping-using-console-log-and-start-using-your-browsers-debugger-62bc893d93ff)
 
 1. 在Sources面板中进行代码调试。
