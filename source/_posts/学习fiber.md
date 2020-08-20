@@ -23,9 +23,13 @@ React的官方文档提供了该机制的[高级概述](3)：React元素的角�
 
 本文是该系列的第一篇文章，旨在向您介绍React的内部架构。在文中我想提供与算法相关的重要概念和数据结构的深入概述。一旦我们有了足够的背景知识，我们将探索用于遍历和处理fiber树的算法和主要函数。本系列的下一篇文章将展示React如何使用该算法来执行初始化渲染以及处理state和props的更新。从那里我们将继续讨论调度程序，子协调流程以及构建effects list的机制。
 
-在这里我将给你一些非常高级的知识。我鼓励你阅读它以理解Concurrent React内部工作背后的魔法。如果你打算给react贡献代码，这个系列的文章也会给你提供引导。我坚信逆向工程，因此会有很多指向最新版本16.6.0的资源的链接。这件事花费时间，但都是值得的。注意，使用React，你并不需要了解这些。本文是关于React内部如何工作的。
+在这里我将给你一些非常高级的知识。我鼓励你阅读它以理解Concurrent React内部工作背后的魔法。如果你打算给react贡献代码，这个系列的文章也会给你提供引导。我坚信逆向工程，因此会有很多指向最新版本16.6.0的资源的链接。
 
-要理解的东西肯定很多，所以如果你不能马上理解一些东西时，不要感到有压力。
+要理解的东西肯定很多，所以如果你不能马上理解一些东西时，不要感到有压力。这件事花费时间，但都是值得的。注意，使用React，你并不需要了解这些。本文是关于React内部如何工作的。
+
+### 背景设置
+
+
 
 [1]: https://indepth.dev/inside-fiber-in-depth-overview-of-the-new-reconciliation-algorithm-in-react/
 [2]: https://indepth.dev/what-every-front-end-developer-should-know-about-change-detection-in-angular-and-react/
