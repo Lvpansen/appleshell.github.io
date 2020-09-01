@@ -255,6 +255,167 @@ work完成之后，我们最终得到一个如下所示的Fiber节点：
 }
 ```
 
+### 花一点时间观察下属性值的差异
+
+应用更新后，memoizedState和updateQueue中的baseState上的count属性的值更改为1。React也更新了ClickCounter组件实例中的state。
+
+此时，队列中不再有更新，所以firstUpdate为null。重要的是，effectTag属性有了变化。它不再是0，值变为了4。二进制形式是100，这意味着第三个位被设置，这正是表示Update的[side-effect tag](11)的位。
+
+```js
+export const Update = 0b00000000100
+```
+
+综上所述，当处理父节点ClickCounter Fiber节点时，React调用变化发生前的生命周期方法，更新state并定义相关的side-effect。
+
+## Reconciling children for the ClickCounter Fiber
+
+完成后，React进入[finishClassComponent](12)。在这个方法中，React调用组件实例的rendr方法，并将diffing算法应用到组件返回的子组件上。[文档](13)中介绍了高级概述。这是相关的部分：
+
+```
+当比较两个相同类型的React DOM元素时，React查看两者的属性，保持相同的底层DOM节点，只更新有变化的属性。
+```
+
+但是，如果我们深入研究，就会发现它实际上是在比较React元素的Fiber节点。但我现在不会讲太多细节，因为这个过程非常复杂。我将写一篇单独的文章，特别关注child reconciliation过程。
+
+如果你想自己学习细节，请查看[reconcileChildrenArray](14)函数，因为在我们的应用程序中，render方法返回一个React元素的数组。
+
+此时，有两件很重要的事要理解。第一，当React进入到child reconciliation 过程中，**它创建或者更新render方法返回的子元素的fiber节点**。finishClassComponent函数返回对当前fiber节点的第一个子节点的引用。它将被赋值给`nextUnitOfWork`，并在之后的work loop中被处理。第二，React将更新子节点的props作为父节点执行work的一部分。为此，它使用从render方法返回的React元素中的数据。
+
+例如，下面是React在协调ClickCounter fiber的子节点之前，span元素对应的Fiber节点的样子：
+```js
+{
+    stateNode: new HTMLSpanElement,
+    type: "span",
+    key: "2",
+    memoizedProps: { children: 0 },
+    pendingProps: { children: 0 },
+    ...
+}
+```
+
+如你所见，memoizedProps和pendingProps中的children属性都是0。下面是render方法返回的span元素对应的React元素的结构：
+```js
+{
+    $$typeof: Symbol(react.element)
+    key: "2"
+    props: { children: 1 }
+    ref: null
+    type: "span"
+}
+```
+
+如你所见，在Fiber节点和返回的React元素中的属性存在不同。在用来创建备用Fiber节点的[createWorkInProgress](14)函数中，React将会复制React元素中的更新到Fiber节点中。
+
+所以，React完成ClickCounter组件子节点的协调后，span Fiber节点将会有pendingProps的更新。它们将与span React元素中的值匹配：
+```js
+{
+    stateNode: new HTMLSpanElement,
+    type: "span",
+    key: "2",
+    memoizedProps: { children: 0 },
+    pendingProps: { children: 1 },
+    ...
+}
+```
+
+之后，当React执行span Fiber节点的work时，将复制它们到memoizedProps上并添加effect来更新DOM。
+
+这就是React在render阶段为ClickCounter fiber节点执行的所有work。由于button是ClickCounter组件的第一个子元素，它将被赋值给nextUnitOfWork变量。它上面没有事情要做，所以React将移动到它的sibling上，即span Fiber节点。通过[这里描述](15)的算法，这发生在completeUnitOfWork函数中。
+
+## 处理Span fiber的更新
+
+所以，nextUnitOfWork变量现在指向备用的span fiber，React开始在其上work。和执行ClickCounter的步骤相似，我们从[beginWork](8)函数开始。
+
+由于我们的span节点是HostComponent类型，在switch语句中React走这个分支：
+```js
+function beginWork(current$$1, workInProgress, ...) {
+    ...
+    switch (workInProgress.tag) {
+        case FunctionalComponent: {...}
+        case ClassComponent: {...}
+        case HostComponent:
+            return updateHostComponent(current, workInProgress, ...)
+        case ...
+    }
+}
+```
+
+## reconcile span fiber的子节点
+
+在我们的例子中，在updateHostComponent中span节点上没有发生重要的事。
+
+并结束于[updateHostComponent](16)函数。你可以看到与之类似的class组件调用的updateClassComponent函数，对于functional函数是updateFunctionComponent，等等。你可以在[ReactFiberBeginWork.js](17)文件中找到这些函数。
+
+## 完成span Fiber节点的work
+
+一旦beginWork完成，节点进入completeWork函数。但在这之前，React需要更新span fiber上的memoizedProps。你可能还记得，在协调ClickCounter组件的子组件时，React更新了span Fiber节点上的pendingProps：
+```js
+{
+    stateNode: new HTMLSpanElement,
+    type: "span",
+    key: "2",
+    memoizedProps: {children: 0},
+    pendingProps: {children: 1},
+    ...
+}
+```
+
+所以一旦span fiber 的beginWork完成，React将更新pendingProps来匹配memoizedProps:
+```js
+function performUnitOfWork(workInProgress) {
+    ...
+    next = beginWork(current$$1, workInProgress, nextRenderExpirationTime)
+    workInProgress.memoizedProps = memoizedProps .pendingProps
+    ...
+}
+```
+
+然后，它调用completeWork函数，这个函数和我们之前在beginWork函数看到的相似，基本上是一个大的switch语句：
+```js
+function completeWork(current, workInProgress, ...) {
+    ...
+    switch (workInProgress.tag) {
+        case FunctionComponent: {...}
+        case ClassComponent: {...}
+        case HostComponent: {
+            ...
+            updateHostComponent(current, workInProgress, ...);
+        }
+        case ...
+    }
+}
+```
+
+由于我们的span Fiber节点是HostComponent，它运行[updateHostComponent](16)函数。在这个函数中React主要做下面的事情：
+ - 准备DOM更新
+ - 把更新添加到span fiber的updateQueue中
+ - 添加effect来更新DOM
+
+在这些操作被执行之前，span Fiber节点看起来是这样：
+```js
+{
+    stateNode: new HTMLSpanElement,
+    type: "span",
+    effectTag: 0,
+    updateQueue: null
+    ...
+}
+```
+当work完成后，它看起来是这样：
+```js
+{
+    stateNode: new HTMLSpanElement,
+    type: "span",
+    effectTag: 4,
+    updateQueue: ["children", "1"],
+    ...
+}
+```
+
+注意effectTag和updateQueue字段的不同。它不再是0，它的值是4。在二进制中它是100，这表示第三位被设置，这正是Update side-effect tag的位。这是React在接下来的commit阶段为这个节点需要做的唯一的工作。updateQueue字段保存了将用于update的payload。
+
+一旦React处理完ClickCounter和它的子组件，render阶段完成。现在，它可以将已完成的备用树赋值给FiberRoot中的finishedWork属性。这是需要刷新到屏幕上的新树。它可以在render阶段后立即被处理，或者在浏览器给React时间之后进行处理。
+
 [1]: https://indepth.dev/in-depth-explanation-of-state-and-props-update-in-react/
 [2]: https://indepth.dev/inside-fiber-in-depth-overview-of-the-new-reconciliation-algorithm-in-react/
 [3]: https://stackblitz.com/edit/react-jwqn64
@@ -265,5 +426,12 @@ work完成之后，我们最终得到一个如下所示的Fiber节点：
 [8]: https://github.com/facebook/react/blob/cbbc2b6c4d0d8519145560bd8183ecde55168b12/packages/react-reconciler/src/ReactFiberBeginWork.js#L1489
 [9]: https://github.com/facebook/react/blob/1034e26fe5e42ba07492a736da7bdf5bf2108bc6/packages/react-reconciler/src/ReactFiberBeginWork.js#L428
 [10]: https://github.com/facebook/react/blob/6938dcaacbffb901df27782b7821836961a5b68d/packages/react-reconciler/src/ReactFiberClassComponent.js#L976
+[11]: https://github.com/facebook/react/blob/b87aabdfe1b7461e7331abb3601d9e6bb27544bc/packages/shared/ReactSideEffectTags.js
+[12]: https://github.com/facebook/react/blob/340bfd9393e8173adca5380e6587e1ea1a23cefa/packages/react-reconciler/src/ReactFiberBeginWork.js#L355
+[13]: https://reactjs.org/docs/reconciliation.html#the-diffing-algorithm
+[14]: https://github.com/facebook/react/blob/769b1f270e1251d9dbdce0fcbd9e92e502d059b8/packages/react-reconciler/src/ReactFiber.js#L326
+[15]: https://medium.com/react-in-depth/inside-fiber-in-depth-overview-of-the-new-reconciliation-algorithm-in-react-e1c04700ef6e
+[16]: https://github.com/facebook/react/blob/cbbc2b6c4d0d8519145560bd8183ecde55168b12/packages/react-reconciler/src/ReactFiberBeginWork.js#L686
+[17]: https://github.com/facebook/react/blob/1034e26fe5e42ba07492a736da7bdf5bf2108bc6/packages/react-reconciler/src/ReactFiberBeginWork.js
 
 [img1]: https://admin.indepth.dev/content/images/2019/08/tmp4.gif
