@@ -416,6 +416,141 @@ function completeWork(current, workInProgress, ...) {
 
 一旦React处理完ClickCounter和它的子组件，render阶段完成。现在，它可以将已完成的备用树赋值给FiberRoot中的finishedWork属性。这是需要刷新到屏幕上的新树。它可以在render阶段后立即被处理，或者在浏览器给React时间之后进行处理。
 
+## Effects list
+
+在我们的例子中，由于span节点和ClickCounter组件都有side effects，React将向HostFiber的firstEffect属性中添加一个指向span Fiber节点的链接。
+
+React在[compliteUnitOfWork](18)函数中创建effects list。下面是一棵带有effects的Fiber树，effects是更新span节点的文本和调用ClickCounter组件的钩子函数：
+
+![][img2]
+
+下面是带有effects的节点的线性列表：
+
+![][img3]
+
+## Commit阶段
+
+这个阶段从[completeRoot](19)函数开始。在它开始执行之前，它设置FiberRoot上的finishedWork属性为null：
+```js
+root.finishedWork = null
+```
+
+不像render阶段，commit阶段总是同步的，因此它可以安全的更新HostRoot以指示commit work已经开始。
+
+commit阶段是React更新DOM，调用变化发生后生命周期函数componentDidUpdate的地方。为了做到这一点，它遍历在前一个render阶段构建的effects列表，并应用它们。
+
+下面是在render阶段为span和ClickCounter节点定义的effects：
+```js
+{ type: ClickCounter, effectTag: 5 }
+{ type: 'span', effectTag: 4 }
+```
+ClickCounter的effect tag的值是5或者101（二进制），并且定义了Update work，这个work转换为class组件的componentDidUpdate生命周期方法。还设置了最低有效位，以表示在render阶段这个Fiber节点的所有work已经完成。
+
+span的effect tag的值是4或者100（二进制），并且定义了update work，这个work是原生组件的DOM更新。对于span元素，React将需要更新元素的textContent。
+
+## 应用effects
+
+我们看一下React如何应用那些effects。用于应用effects的函数[commitRoot](20)有3个子函数构成:
+```js
+function commitRoot(root, finishedWork) {
+    commitBeforeMutationLifecycles()
+    commitAllHostEffect()
+    root.current = finishedWork
+    commitAllLifeCycles()
+}
+```
+
+每个子函数都实现了一个循环，该循环遍历effects列表并检查effects的类型。当发现与函数目的有关的effect时，就应用它。在我们的例子中，它将调用ClickCounter组件上的componentDidUpdate生命周期方法，更新span元素的文本。
+
+第一个函数[commitBeforeMutationLifeCycles](21)查找[Snapshot](22) effect，并调用getSnapshotBeforeUpdate方法。但是，由于我们在ClickCounter组件上没有实现该方法，React在render阶段不会添加这个effect。所以在我们的例子中，这个函数不做任何事。
+
+## DOM 更新
+
+下一步，React移动到[commitAllHostEffects](23)函数。在这个函数中，React将把span元素的文本从0变为1。ClickCounter fiberu需要做任何事情，因为class组件对应的节点没有任何DOM更新。
+
+这个函数的要点是它选择正确类型的effect，并应用于对应的操作。在我们的例子中，我们需要更新span元素的文本，所以我们执行Update分支：
+```js
+function updateHostEffects() {
+    switch (primaryEffectTag) {
+        case Placement: {...}
+        case PlacementAndUpdate: {...}
+        case Update: 
+            {
+                var current = nextEffect.alternate
+                commitWork(current, nextEffect)
+                break
+            }
+        case Deletion: {...}
+    }
+}
+```
+
+通过执行commitWork，我们最终进入到[updateDOMProperties](24)函数。它获取在render阶段添加到Fiber节点的updateQueue负载，并更新span元素上的textConent属性：
+```js
+function updateDOMProperties(domElement, updatePayload, ...) {
+    for (let i = 0; i < updatePayload.length; i += 2) {
+        const propKey = updatePayload[i];
+        const propValue = updatePayload[i + 1];
+        if (propKey === STYLE) {...}
+        else if (propKey === DANGEROUSLY_SET_INNER_HTML) {...}
+        else if (propKey === CHILDERN) {
+            setTextContent(domElement, propValue);
+        } else {...}
+    }
+}
+```
+
+DOM更新被应用后，React将finishedWork树赋值给HostRoot。它将备用树设置为当前树：
+```js
+root.current = finishedWork
+```
+
+## 调用变化发生后的生命周期钩子
+
+最后剩下的函数是[commitAllLifecycles](25)。这是React调用变化发生后的生命周期方法的地方。在render阶段，React给ClickCounter组件添加Update effect。这是commitAllLifecycles函数查找的effects之一，并调用componentDidUpdate方法：
+```js
+function commitAllLifeCyles(finishedRoot, ...) {
+    while (nextEffect !== null) {
+        const effectTag = nextEffect.effectTag
+
+        if (effectTag & (Update | Callback)) {
+            const current = nextEffect.alernate
+            commitLifeCycles(finishedRoot, current, nextEffect, ...)
+        }
+
+        if (effectTag & Ref) {
+            commitAttachRef(nectEffect)
+        }
+
+        nextEffect = nextEffect.nextEffect
+    }
+}
+```
+
+这个函数也更新refs，但是由于我们没有此功能，因此不会使用。下面是[commitLifeCycles](26)函数中调用的方法：
+```js
+function commitLifiCycles(finishedRoot, current, ...) {
+    ...
+    switch (finishedWork.tag) {
+        case FunctionalCompoent: {...}
+        case ClassCompoent: {
+            const instance = finishedWork.stateNode
+            if (finishedWork.effectTag & Update) {
+                if (current === null) {
+                    instance.componentDidMount()
+                } else {
+                    instance.componentDidUpdate(prevProps, prevState, ...)
+                }
+            }
+        }
+        case HostComponent: {...}
+        case ...
+    }
+}
+```
+
+你也可以看到，这个函数是React调用第一次渲染的组件的componentDidMount方法的地方。
+
 [1]: https://indepth.dev/in-depth-explanation-of-state-and-props-update-in-react/
 [2]: https://indepth.dev/inside-fiber-in-depth-overview-of-the-new-reconciliation-algorithm-in-react/
 [3]: https://stackblitz.com/edit/react-jwqn64
@@ -433,5 +568,16 @@ function completeWork(current, workInProgress, ...) {
 [15]: https://medium.com/react-in-depth/inside-fiber-in-depth-overview-of-the-new-reconciliation-algorithm-in-react-e1c04700ef6e
 [16]: https://github.com/facebook/react/blob/cbbc2b6c4d0d8519145560bd8183ecde55168b12/packages/react-reconciler/src/ReactFiberBeginWork.js#L686
 [17]: https://github.com/facebook/react/blob/1034e26fe5e42ba07492a736da7bdf5bf2108bc6/packages/react-reconciler/src/ReactFiberBeginWork.js
+[18]: https://github.com/facebook/react/blob/d5e1bf07d086e4fc1998653331adecddcd0f5274/packages/react-reconciler/src/ReactFiberScheduler.js#L999
+[19]: https://github.com/facebook/react/blob/95a313ec0b957f71798a69d8e83408f40e76765b/packages/react-reconciler/src/ReactFiberScheduler.js#L2306
+[20]: https://github.com/facebook/react/blob/95a313ec0b957f71798a69d8e83408f40e76765b/packages/react-reconciler/src/ReactFiberScheduler.js#L523
+[21]: https://github.com/facebook/react/blob/fefa1269e2a67fa5ef0992d5cc1d6114b7948b7e/packages/react-reconciler/src/ReactFiberCommitWork.js#L183
+[22]: https://github.com/facebook/react/blob/b87aabdfe1b7461e7331abb3601d9e6bb27544bc/packages/shared/ReactSideEffectTags.js#L25
+[23]: https://github.com/facebook/react/blob/95a313ec0b957f71798a69d8e83408f40e76765b/packages/react-reconciler/src/ReactFiberScheduler.js#L376
+[24]: https://github.com/facebook/react/blob/8a8d973d3cc5623676a84f87af66ef9259c3937c/packages/react-dom/src/client/ReactDOMComponent.js#L326
+[25]: https://github.com/facebook/react/blob/d5e1bf07d086e4fc1998653331adecddcd0f5274/packages/react-reconciler/src/ReactFiberScheduler.js#L479
+[26]: https://github.com/facebook/react/blob/e58ecda9a2381735f2c326ee99a1ffa6486321ab/packages/react-reconciler/src/ReactFiberCommitWork.js#L351
 
 [img1]: https://admin.indepth.dev/content/images/2019/08/tmp4.gif
+[img2]: https://admin.indepth.dev/content/images/2019/08/image.png
+[img3]: https://admin.indepth.dev/content/images/2019/08/image-1.png
