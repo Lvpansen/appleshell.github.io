@@ -214,4 +214,87 @@ const element = (
 
 下一步，我们需要写出我们版本中的ReactDOM.render函数。
 
+目前，我们只关心向DOM中添加内容。我们叫稍后处理更新和删除。
+
+我们从使用元素类型创建DOM节点开始，然后把新节点添加到容器中。我们递归地给每个子节点执行相同的操作。我们也需要处理文本节点，如果类型是TEXT_ELEMENT，我们就创建一个文本节点。最后，我们需要把元素的属性赋值给节点。
+
+```js
+function render (element, container) {
+  const dom =
+    element.type === 'TEXT_ELEMENT'
+      ? document.createTextNode('')
+      : document.createElement(element.type)
+
+  const isProperty = key => key !== 'children'
+  Object.keys(element.props)
+    .filter(isProperty)
+    .forEach(name => {
+      dom[name] = element.props[name]
+    })
+
+  element.props.children.forEach(child =>
+    render(child, dom)
+  )
+
+  container.appendChild(dom)
+}
+```
+
+就是这样，我们现在有一个将JSX渲染到DOM上的库。
+
+## Step Ⅲ：Comcurrent Mode
+
+但是，在我们开始添加更多代码前，我们需要重构。
+
+这个递归调用有一个问题。
+
+一旦我们开始渲染，在我们渲染完整棵树之前，我们不同停止。如果elelment tree非常大，它可能阻塞主线程非常长的时间。而且，如果浏览器需要处理高优先级的内容，例如处理用户输入或者保证动画流畅，它将不得不等到渲染结束。
+
+所以我们将把work分成小的单元，在完成每个单元后，如果需要执行其他任何操作，我们将让浏览器中断渲染。
+
+```js
+let nextUnitOfWork = null
+
+function workLoop(deadline) {
+  let shouldYield = false
+  while (nextUnitOfWork && !shouldYield) {
+    nextUnitOfWork = performUnitWork(nextUnitOfWork)
+    shouldYield = deadline.timeRemaining() < 1
+  }
+  requestIdleCallback(workLoop)
+}
+
+requestIdleCallback(workLoop)
+
+functino performUnitWork(nextUnitOfWork) {
+  // TODO
+}
+```
+
+我们使用`requestIdleCallback`来进行循环。你可以把`requestIdleCallback`当成是`setTimeout`，但是我们不是告诉它什么时候运行，而是当主线程空闲时运行回调。
+
+React[不再使用requestIdleCallback](2)。现在它使用[scheduler package](3)。但是对于此用例，它在概念上是相同的。
+
+`requestIdleCallback`也给了我们一个deadline参数。我们可以用它来检查在浏览器再次控制之前我们还有多少时间。
+
+截止到2019年11月，Concurrent Mode在React中仍然不稳定。稳定版本的循环看起来更像这样：
+
+```js
+while (nextUnitOfWork) {
+  nextUnitOfWork = performUnitOfWork(
+    nextUnitOfWork
+  )
+}
+```
+
+要开始使用循环，我们需要设置第一个work单元，然后写`performUnitOfWork`函数，这个函数不仅执行work，而且返回下一个work单元。
+
+## Step Ⅳ：Fibers
+
+为了组织work单元，我们需要一个数据结构：fiber tree。
+
+**每个元素都有一个fiber，每个fiber是一个work单元**
+
 [1]: https://pomb.us/build-your-own-react/
+[2]: https://github.com/facebook/react/issues/11171#issuecomment-417349573
+[3]: https://github.com/facebook/react/tree/master/packages/scheduler
