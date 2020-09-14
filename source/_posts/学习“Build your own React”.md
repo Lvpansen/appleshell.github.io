@@ -295,6 +295,39 @@ while (nextUnitOfWork) {
 
 **每个元素都有一个fiber，每个fiber是一个work单元**
 
+让我举一个例子，假如我们想渲染下面这样一棵元素树：
+```js
+Didact.render(
+  <div>
+    <h1>
+      <p />
+      <a />
+    </h1>
+  </div>,
+  container
+)
+```
+
+![fiber tree][img1]
+
+在`render`中我们将创建root fiber，并把它设置为`nextUnitOfWork`。剩余的work将在`performUnitOfWork`中进行，我们将在那里做三件事：
+
+  1. 把元素添加到DOM
+  2. 为元素的子元素创建fibers
+  3. 选择下一个work单元（next unit of work）
+
+这个数据结构的目标之一是使得找到下一个work单元变得容易。这就是为什么每一个fiber都与它的第一个子节点，它的下一个兄弟节点和它的父节点相连。
+
+当我们完成一个fiber上的work时，如果它有子fiber（child），那么该fiber将成为下一个work单元。在我们的例子中，当我们完成div fiber上的work时，下一个work单元将是h1 fiber。
+
+如果fiber没有子fiber（child），我们将用兄弟fiber（sibling）作为下一个work单元。例子中，p fiber没有子fiber，所以完成其上的work后，我们将移动到a fiber上。
+
+如果一个fiber既没有子fiber，也没有兄弟fiber，我们将进入“叔叔”fiber: 父节点的兄弟节点。例子中像a fiber和h2 fiber的关系。
+
+同样，如果父fiber（parent）没有兄弟fiber（sibling），我们就不断向上检查父fiber，直到找到有兄弟节点的父fiber或者到达root。如果我们到达了根，就意味着我们完成了这次render中执行的所有work。
+
 [1]: https://pomb.us/build-your-own-react/
 [2]: https://github.com/facebook/react/issues/11171#issuecomment-417349573
 [3]: https://github.com/facebook/react/tree/master/packages/scheduler
+
+[img1]: https://pomb.us/static/a88a3ec01855349c14302f6da28e2b0c/ac667/fiber1.png
